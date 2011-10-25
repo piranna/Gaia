@@ -1,0 +1,24 @@
+Compile to 32bits from a 64bits host:
+
+gcc -c kernel.c -m32 -nostdinc -fno-builtin -fno-stack-protector
+gcc -c screen.c -m32 -nostdinc -fno-builtin -fno-stack-protector
+gcc -c boot.S   -m32 -nostdinc -fno-builtin
+
+
+Link and make a bin kernel for 32bits:
+
+ld -o kernel kernel.o screen.o boot.o -Ttext 0x100000 -melf_i386
+
+
+Exec multiboot kernel directly from qemu command line:
+
+qemu -kernel kernel
+
+
+Compile for 64bits:
+
+Change assembler pushl instructions for pushq and %a.. registers for %r..
+
+
+http://pdos.csail.mit.edu/papers/exo:chen-meng.pdf
+http://www.docstoc.com/docs/19697222/The-Exokernel-Operating-System-Architecture
