@@ -9,6 +9,8 @@
 #include "multiboot.h"
 #include <stdio.h>
 
+#include "descriptor_tables.h"
+
 
 /* Check if the bit BIT in FLAGS is set. */
 #define CHECK_FLAG(flags,bit)	((flags) & (bit))
@@ -121,6 +123,9 @@ void Multiboot_PrintInfo(unsigned long magic, unsigned long addr)
 
 void cmain(unsigned long magic, unsigned long addr)
 {
+    // Initialise all the ISRs and segmentation
+    init_descriptor_tables();
+
     /* Clear the screen. */
     cls();
 

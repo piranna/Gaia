@@ -13,8 +13,8 @@ extern void gdt_flush(u32int);
 extern void idt_flush(u32int);
 
 // Internal function prototypes.
-static void init_gdt();
-static void init_idt();
+static void init_gdt(void);
+static void init_idt(void);
 static void gdt_set_gate(s32int,u32int,u32int,u8int,u8int);
 static void idt_set_gate(u8int,u32int,u16int,u8int);
 
@@ -25,7 +25,7 @@ idt_ptr_t   idt_ptr;
 
 // Initialisation routine - zeroes all the interrupt service routines,
 // initialises the GDT and IDT.
-void init_descriptor_tables()
+void init_descriptor_tables(void)
 {
 
     // Initialise the global descriptor table.
@@ -35,7 +35,7 @@ void init_descriptor_tables()
 
 }
 
-static void init_gdt()
+static void init_gdt(void)
 {
     gdt_ptr.limit = (sizeof(gdt_entry_t) * 5) - 1;
     gdt_ptr.base  = (u32int)&gdt_entries;
@@ -63,12 +63,12 @@ static void gdt_set_gate(s32int num, u32int base, u32int limit, u8int access, u8
     gdt_entries[num].access      = access;
 }
 
-static void init_idt()
+static void init_idt(void)
 {
     idt_ptr.limit = sizeof(idt_entry_t) * 256 -1;
     idt_ptr.base  = (u32int)&idt_entries;
 
-    memset(&idt_entries, 0, sizeof(idt_entry_t)*256);
+    memset((u8int*)&idt_entries, 0, sizeof(idt_entry_t)*256);
 
     idt_set_gate( 0, (u32int)isr0 , 0x08, 0x8E);
     idt_set_gate( 1, (u32int)isr1 , 0x08, 0x8E);
