@@ -14,12 +14,9 @@
 #define CHECK_FLAG(flags,bit)	((flags) & (bit))
 
 
-void cmain(unsigned long magic, unsigned long addr)
+void Multiboot_PrintInfo(unsigned long magic, unsigned long addr)
 {
     multiboot_info_t* mbi;
-
-    /* Clear the screen. */
-    cls();
 
     /* Am I booted by a Multiboot-compliant boot loader? */
     if(magic != MULTIBOOT_BOOTLOADER_MAGIC)
@@ -119,4 +116,16 @@ void cmain(unsigned long magic, unsigned long addr)
                    mmap->len & 0xffffffff,
                    (unsigned)mmap->type);
     }
+}
+
+
+void cmain(unsigned long magic, unsigned long addr)
+{
+    /* Clear the screen. */
+    cls();
+
+    Multiboot_PrintInfo(magic, addr);
+
+    asm volatile("int $0x3");
+    asm volatile("int $0x4");
 }
