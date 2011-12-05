@@ -2,9 +2,11 @@
 DEBUG = true
 
 TARGET = gaia
+PLATFORM = x86
+
 SOURCE_PATH = src
 SOURCE_LIBS = src/lib
-SOURCE_ASM_PATH = src/asm/x86
+SOURCE_ASM_PATH = src/asm/$(PLATFORM)
 
 SOURCES      = $(SOURCE_PATH)/main.c
 SOURCES     += $(SOURCE_PATH)/gdt.c $(SOURCE_PATH)/idt.c $(SOURCE_PATH)/isr.c
@@ -54,6 +56,10 @@ $(SOURCE_ASM_PATH)/gdt.o:
 #	$(CC) -o $@ -c $(SOURCE_ASM_PATH)/gdt.s -m32 -nostdinc -nostdlib -fno-builtin
 	nasm $(ASFLAGS) $(SOURCE_ASM_PATH)/gdt.s
 
-$(SOURCE_ASM_PATH)/interrupt.o:
-#	$(CC) -o $@ -c $(SOURCE_ASM_PATH)/interrupt.s -m32 -nostdinc -nostdlib -fno-builtin
-	nasm $(ASFLAGS) $(SOURCE_ASM_PATH)/interrupt.s
+$(SOURCE_ASM_PATH)/idt.o:
+#	$(CC) -o $@ -c $(SOURCE_ASM_PATH)/idt.s -m32 -nostdinc -nostdlib -fno-builtin
+	nasm $(ASFLAGS) $(SOURCE_ASM_PATH)/idt.s
+
+$(SOURCE_ASM_PATH)/isr.o:
+#	$(CC) -o $@ -c $(SOURCE_ASM_PATH)/isr.s -m32 -nostdinc -nostdlib -fno-builtin
+	nasm $(ASFLAGS) $(SOURCE_ASM_PATH)/isr.s
