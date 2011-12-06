@@ -13,9 +13,10 @@ SOURCES      += $(SOURCE_PATH)/gdt.c $(SOURCE_PATH)/idt.c $(SOURCE_PATH)/irq.c
 SOURCES      += $(SOURCE_PATH)/isr.c
 #SOURCES      += $(SOURCE_PATH)/kheap.c $(SOURCE_PATH)/paging.c
 SOURCES      += $(SOURCE_PATH)/syscall.c
-SOURCES      += $(SOURCE_PATH)/drivers/PIT.c
 SOURCES      += $(SOURCE_PATH)/common.c
 SOURCES      += $(SOURCE_PATH)/userspace/syscall.c
+SOURCES      += $(SOURCE_PATH)/userspace/drivers/PIT.c
+
 SOURCES_LIBS  = $(SOURCE_LIBS)/stdio.c
 #SOURCES_LIBS += $(SOURCE_LIBS)/ordered_array.c
 
@@ -27,7 +28,8 @@ OBJS      = $(SOURCES:.c=.o) $(SOURCES_LIBS:.c=.o) $(OBJS_ASM)
 
 CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement
 #CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Werror
-CINCS = -I$(SOURCE_PATH) -I$(SOURCE_PATH)/include -I$(SOURCE_PATH)/userspace/include
+CINCS  = -I$(SOURCE_PATH) -I$(SOURCE_PATH)/include
+CINCS += -I$(SOURCE_PATH)/userspace -I$(SOURCE_PATH)/userspace/include
 ifeq ($(DEBUG),true)
 	CDEBUGS += -g -D__DEBUG__=1
 else
