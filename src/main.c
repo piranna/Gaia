@@ -11,7 +11,7 @@
 
 #include "gdt.h"
 #include "idt.h"
-//#include "paging.h"
+#include "paging.h"
 
 #include "drivers/PIT.h"
 
@@ -125,7 +125,7 @@ void Multiboot_PrintInfo(unsigned long magic, unsigned long addr)
 }
 
 
-/*void switch_to_user_mode(void)
+void switch_to_user_mode(void)
 {
 	// Set up a stack structure for switching to user mode.
 	asm volatile("\
@@ -145,7 +145,7 @@ void Multiboot_PrintInfo(unsigned long magic, unsigned long addr)
 		iret;\
 		1:\
 		");
-}*/
+}
 
 
 // Initialisation routine - zeroes all the interrupt service routines,
@@ -156,6 +156,7 @@ void init(void)
     idt_init();		// Initialise the interrupt descriptor table.
 
 //    paging_init();
+    syscall_init();
 
     // Enable interruptions
     asm volatile("sti");
@@ -178,6 +179,6 @@ void cmain(unsigned long magic, unsigned long addr)
     asm volatile("int $0x3");
     asm volatile("int $0x4");
 
-////    switch_to_user_mode();
-////    printf("Hello, user world!\n");
+//    switch_to_user_mode();
+//    printf("Hello, user world!\n");
 }
