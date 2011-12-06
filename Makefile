@@ -10,15 +10,15 @@ SOURCE_ASM_PATH = src/asm/$(PLATFORM)
 
 SOURCES      = $(SOURCE_PATH)/main.c
 SOURCES     += $(SOURCE_PATH)/gdt.c $(SOURCE_PATH)/idt.c $(SOURCE_PATH)/irq.c
-SOURCES     += $(SOURCE_PATH)/isr.c
+SOURCES     += $(SOURCE_PATH)/isr.c #$(SOURCE_PATH)/kheap.c $(SOURCE_PATH)/paging.c
 SOURCES     += $(SOURCE_PATH)/drivers/PIT.c
 SOURCES     += $(SOURCE_PATH)/common.c
-SOURCES_LIBS = $(SOURCE_LIBS)/stdio.c
+SOURCES_LIBS = $(SOURCE_LIBS)/stdio.c #$(SOURCE_LIBS)/ordered_array.c
 
 OBJS_ASM  = $(SOURCE_ASM_PATH)/multiboot.o
 OBJS_ASM += $(SOURCE_ASM_PATH)/gdt.o $(SOURCE_ASM_PATH)/idt.o
 OBJS_ASM += $(SOURCE_ASM_PATH)/irq.o $(SOURCE_ASM_PATH)/isr.o
-OBJS_ASM += $(SOURCE_ASM_PATH)/tss.o
+#OBJS_ASM += $(SOURCE_ASM_PATH)/process.o $(SOURCE_ASM_PATH)/tss.o
 OBJS      = $(SOURCES:.c=.o) $(SOURCES_LIBS:.c=.o) $(OBJS_ASM)
 
 CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement
@@ -71,6 +71,10 @@ $(SOURCE_ASM_PATH)/irq.o:
 $(SOURCE_ASM_PATH)/isr.o:
 #	$(CC) -o $@ -c $(SOURCE_ASM_PATH)/isr.s -m32 -nostdinc -nostdlib -fno-builtin
 	nasm $(ASFLAGS) $(SOURCE_ASM_PATH)/isr.s
+
+$(SOURCE_ASM_PATH)/process.o:
+#	$(CC) -o $@ -c $(SOURCE_ASM_PATH)/process.s -m32 -nostdinc -nostdlib -fno-builtin
+	nasm $(ASFLAGS) $(SOURCE_ASM_PATH)/process.s
 
 $(SOURCE_ASM_PATH)/tss.o:
 #	$(CC) -o $@ -c $(SOURCE_ASM_PATH)/tss.s -m32 -nostdinc -nostdlib -fno-builtin

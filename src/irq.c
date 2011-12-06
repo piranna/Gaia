@@ -3,12 +3,12 @@
 //          Part of this code is modified from JamesM's kernel development tutorials.
 //
 
-#include "isr.h"
+#include "irq.h"
 
 
 isr_t interrupt_handlers[256];
 
-void register_interrupt_handler(u8int n, isr_t handler)
+void irq_register_handler(u8int n, isr_t handler)
 {
   interrupt_handlers[n] = handler;
 }
