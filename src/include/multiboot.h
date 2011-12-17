@@ -218,6 +218,8 @@
  };
  typedef struct multiboot_mod_list multiboot_module_t;
 
+ void multiboot_print_info(unsigned long magic, unsigned long addr);
+
  #endif /* ! ASM_FILE */
 
  #endif /* ! MULTIBOOT_HEADER */
