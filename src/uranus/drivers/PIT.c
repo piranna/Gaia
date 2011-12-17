@@ -12,13 +12,13 @@
 
 #include <stdio.h>
 
-#include "irq.h"
+#include "syscall_userspace.h"
 
 
 u32int tick = 0;
 
 
-static void PIT_callback(registers_t* regs)
+static void PIT_handler(registers_t* regs)
 {
    tick++;
 
@@ -33,13 +33,14 @@ void PIT_init(u32int frequency)
    u32int divisor = 1193180 / frequency;
 
    // Firstly, register our timer callback.
-	irq_register_handler(IRQ0, &PIT_callback);
+   irq_handler_register(IRQ0, &PIT_handler);
+//   syscall_irq_register_handler(IRQ0, &PIT_callback);
 
-   // Send the command byte.
-   syscall_outb(0x43, 0x36);
-
-   // Divisor has to be sent byte-wise, so split here into upper/lower bytes.
-   // Send the frequency divisor.
-   syscall_outb(0x40, (u8int)(divisor & 0xFF));
-   syscall_outb(0x40, (u8int)((divisor>>8) & 0xFF));
+//   // Send the command byte.
+//   syscall_outb(0x43, 0x36);
+//
+//   // Divisor has to be sent byte-wise, so split here into upper/lower bytes.
+//   // Send the frequency divisor.
+//   syscall_outb(0x40, (u8int)(divisor & 0xFF));
+//   syscall_outb(0x40, (u8int)((divisor>>8) & 0xFF));
 }
