@@ -4,6 +4,7 @@ Exokernel
 
 Roll your own toy UNIX-clone OS
     http://www.jamesmolloy.co.uk/tutorial_html
+    http://www.osdever.net/tutorials/view/brans-kernel-development-tutorial
 
 Hardware text mode cursor
     http://www.osdever.net/FreeVGA/vga/textcur.htm
