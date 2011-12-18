@@ -20,9 +20,10 @@ u32int tick = 0;
 
 static void PIT_handler(registers_t* regs)
 {
-   tick++;
+	tick++;
 
-   printf("Tick: %d\n", tick);
+	if(!(tick % 100))
+		printf("Tick: %d\n", tick);
 }
 
 void PIT_init(u32int frequency)
