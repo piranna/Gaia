@@ -42,8 +42,8 @@ void switch_to_user_mode(void)
 // initialises the GDT and IDT.
 void init(void)
 {
-    gdt_init();		// Initialise the global descriptor table.
-    idt_init();		// Initialise the interrupt descriptor table.
+    gdt_init();	// Initialise the global descriptor table.
+    idt_init();	// Initialise the interrupt descriptor table.
 
 //    paging_init();
     syscall_init();
@@ -56,14 +56,14 @@ void kmain(void);
 
 void cmain(unsigned long magic, unsigned long addr)
 {
+	// Initialise all the ISRs and segmentation
+	init();
+
 	/* Clear the screen. */
 	cls();
 
 	// Show multiboot info
 	multiboot_print_info(magic, addr);
-
-	// Initialise all the ISRs and segmentation
-	init();
 
 //    switch_to_user_mode();
 //    printf("Hello, user world!\n");

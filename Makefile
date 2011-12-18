@@ -22,7 +22,9 @@ OBJS_ASM  = $(SOURCE_ASM_PATH)/multiboot.o
 OBJS_ASM += $(SOURCE_ASM_PATH)/gdt.o $(SOURCE_ASM_PATH)/idt.o
 OBJS_ASM += $(SOURCE_ASM_PATH)/irq.o $(SOURCE_ASM_PATH)/isr.o
 OBJS_ASM += $(SOURCE_ASM_PATH)/process.o $(SOURCE_ASM_PATH)/tss.o
-OBJS      = $(SOURCES:.c=.o) $(SOURCES_LIBS:.c=.o) $(OBJS_ASM)
+
+OBJS  = $(SOURCES:.c=.o) $(SOURCES_LIBS:.c=.o) $(OBJS_ASM)
+OBJS += $(SOURCE_PATH)/uranus/uranus.a
 
 CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement
 #CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Werror
@@ -45,6 +47,7 @@ all : $(TARGET).out
 
 clean :
 	$(RM) $(TARGET).out $(OBJS)
+	$(MAKE) clean -C $(SOURCE_PATH)/uranus
 
 run :
 	qemu --kernel $(TARGET).out
@@ -54,6 +57,9 @@ run :
 $(TARGET).out : $(OBJS)
 	$(CC) -o $@ $(OBJS) -m32 -nostdinc -nostdlib -fno-builtin
 #	$(LD) -o $@ $(OBJS) -Ttext 0x100000 -melf_i386
+
+$(SOURCE_PATH)/uranus/uranus.a :
+	$(MAKE) -C $(SOURCE_PATH)/uranus
 
 $(SOURCE_ASM_PATH)/multiboot.o:
 	$(CC) -o $@ -c $(SOURCE_ASM_PATH)/multiboot.S $(CFLAGS)
