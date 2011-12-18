@@ -2,10 +2,9 @@
 //              Written for JamesM's kernel development tutorials.
 
 #include "syscall.h"
+
+#include "idt.h"
 #include "irq.h"
-
-
-static void syscall_handler(registers_t* regs);
 
 
 int in(const u8int bytepower, const u16int port)
@@ -22,6 +21,7 @@ int in(const u8int bytepower, const u16int port)
 
 void out(const u8int bytepower, const u16int port, const u8int value)
 {
+printf("out: [%d] %d -> %d\n", bytepower, port,value);
 	switch(bytepower)
 	{
 		case 0:	return outb(port, value);
@@ -41,14 +41,10 @@ static void* syscalls[] =
 u32int num_syscalls = 3;
 
 
-void syscall_init(void)
+#include <stdio.h>
+static void syscall_handler(registers_t* regs)
 {
-    // Register our syscall handler.
-    irq_handler_register(0x80, &syscall_handler);
-}
-
-void syscall_handler(registers_t* regs)
-{
+printf("syscall_handler: [%d] %d -> %d\n", regs->eax, regs->ebx,regs->ecx);\
     // Firstly, check if the requested syscall number is valid.
     // The syscall number is found in EAX.
     if(regs->eax >= num_syscalls)
@@ -79,4 +75,15 @@ void syscall_handler(registers_t* regs)
       : "r" (regs->edi), "r" (regs->esi), "r" (regs->edx), "r" (regs->ecx), "r" (regs->ebx),
         "r" (location));
     regs->eax = ret;
+}
+
+extern void isr128(void);
+
+void syscall_init(void)
+{
+    idt_set_gate(128, (u32int)isr128, 0x08, 0x8E);
+
+    // Register our syscall handler.
+printf("syscall_init: %d -> %d\n", 0x80,&syscall_handler);
+    irq_handler_register(0x80, &syscall_handler);
 }

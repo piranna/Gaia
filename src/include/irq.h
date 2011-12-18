@@ -28,12 +28,10 @@
 #define IRQ14 46	// IDE primary controller
 #define IRQ15 47	// IDE secondary controller
 
+void irq_init(void);
 // Enables registration of callbacks for interrupts or IRQs.
 // For IRQs, to ease confusion, use the #defines above as the
 // first parameter.
-typedef void (*isr_t)(registers_t*);
-
-void irq_init(void);
 void irq_handler_register(u8int n, isr_t handler);
 
 #endif /* IRQ_H_ */

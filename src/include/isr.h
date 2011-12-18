@@ -17,6 +17,8 @@ typedef struct registers
     u32int eip, cs, eflags, useresp, ss; // Pushed by the processor automatically.
 } registers_t;
 
+typedef void (*isr_t)(registers_t*);
+
 void isr_init(void);
 
 #endif

@@ -42,12 +42,30 @@ extern void isr29(void);
 extern void isr30(void);
 extern void isr31(void);
 
+extern isr_t irq_entries[256];
 
 #include <stdio.h>
 // This gets called from our ASM interrupt handler stub.
 void isr_handler(registers_t regs)
 {
-//	printf("received interrupt: %d\n", regs.int_no);
+    u8int int_no = regs.int_no & 0xFF;
+
+//if(regs.int_no!=13)
+//printf("isr_handler: [%d] %d -> %d\n", int_no, regs.ebx,regs.ecx);
+	// This line is important. When the processor extends the 8-bit interrupt number
+	// to a 32bit value, it sign-extends, not zero extends. So if the most significant
+	// bit (0x80) is set, regs.int_no will be very large (about 0xffffff80).
+
+    if(irq_entries[int_no])
+    {
+        isr_t handler = irq_entries[int_no];
+        handler(&regs);
+    }
+    else
+    {
+        printf("unhandled interrupt: %d\n",int_no);
+        for(;;);
+    }
 }
 
 
