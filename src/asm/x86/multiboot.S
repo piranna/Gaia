@@ -73,7 +73,7 @@ multiboot_entry:
     pushl   %eax
 
     /* Now enter the C main function... */
-    call    EXT_C(cmain)
+    call    EXT_C(gaia_main)
 
     /* Halt. */
     pushl   $halt_message

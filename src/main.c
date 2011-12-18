@@ -40,7 +40,7 @@ void switch_to_user_mode(void)
 
 // Initialisation routine - zeroes all the interrupt service routines,
 // initialises the GDT and IDT.
-void init(void)
+void gaia_init(void)
 {
     gdt_init();	// Initialise the global descriptor table.
     idt_init();	// Initialise the interrupt descriptor table.
@@ -52,12 +52,12 @@ void init(void)
     asm volatile("sti");
 }
 
-void kmain(void);
+void main(void);
 
-void cmain(unsigned long magic, unsigned long addr)
+void gaia_main(unsigned long magic, unsigned long addr)
 {
 	// Initialise all the ISRs and segmentation
-	init();
+	gaia_init();
 
 	/* Clear the screen. */
 	cls();
@@ -69,5 +69,5 @@ void cmain(unsigned long magic, unsigned long addr)
 //    printf("Hello, user world!\n");
 
 	// Start the userspace kernel
-	kmain();
+	main();
 }
