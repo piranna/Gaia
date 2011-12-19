@@ -5,51 +5,8 @@
 #include "video.h"
 
 
-/* Some screen stuff. */
-#define COLUMNS   80		/* The number of columns. */
-#define LINES     25		/* The number of lines. */
-#define ATTRIBUTE 7			/* The attribute of an character. */
-#define VIDEO     0xB8000	/* The video memory address. */
+#define putchar(p1) video_putchar(p1)
 
-/* Variables. */
-extern int xpos;	/* Save the X position. */
-extern int ypos;	/* Save the Y position. */
-
-/* Point to the video memory. */
-static volatile unsigned char* video = (unsigned char*)VIDEO;
-
-
-/* Put the character C on the screen and return the written character,
- * just like the libc function printf. */
-int
-putchar(int c)
-{
-	switch(c)
-	{
-		newline:
-
-		case '\n':
-			ypos++;
-			if(ypos >= LINES)
-			{
-				linefeed();
-				ypos = LINES-1;
-			}
-
-		case '\r':
-			xpos = 0;
-			return c;
-	}
-
-	*(video + (xpos + ypos * COLUMNS) * 2) = c & 0xFF;
-	*(video + (xpos + ypos * COLUMNS) * 2 + 1) = ATTRIBUTE;
-
-	xpos++;
-	if(xpos >= COLUMNS)
-		goto newline;
-
-	return c;
- }
 
 /* Format a string and print it on the screen, just like the libc
 	function printf. */
