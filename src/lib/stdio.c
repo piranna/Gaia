@@ -2,10 +2,19 @@
 
 #include <stdlib.h>
 
-#include "video.h"
+#include "common.h"
 
 
-#define putchar(p1) video_putchar(p1)
+extern t_em_send uranus_em_send;
+int putchar(int c)
+{
+	if(uranus_em_send)
+		uranus_em_send("putchar", c);
+//		//return uranus_em_send("putchar", c);
+
+	// We should raise some kind of exception to userspace...
+	return 0;
+}
 
 
 /* Format a string and print it on the screen, just like the libc

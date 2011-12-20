@@ -18,4 +18,7 @@ int syscall_outb(const u16int port, const u8int value);
 #include "irq.h"
 DECL_SYSCALL2(irq_register_handler, const u8int, const isr_t)
 
+#include "eventmanager.h"
+DECL_SYSCALL1(set_eventmanager_send, const t_em_send)
+
 #endif

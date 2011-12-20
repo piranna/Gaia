@@ -11,4 +11,4 @@ The long term purpose is to serve as basis to develop a pure user-space kernel o
 * Eclipse (optional, just make development easier and pretty :-) )
 
 == Building the Project ==
-From command line, just type ''make'' and later ''make run'' to exec it with QEmu. Also the makefile is integrated in the Eclipse project, so you could be able to build and launch inside it as usual.
+From command line, just type ''make'' and later ''make run'' to exec it with QEmu (it's being done using the QEmu --kernel command line argument). Also the makefile is integrated in the Eclipse project, so you could be able to build and launch inside it as usual.
