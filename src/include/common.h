@@ -20,8 +20,6 @@ void outw(u16int port, u16int value);
 u8int inb(u16int port);
 u16int inw(u16int port);
 
-void memset(u8int* dest, u8int val, u32int len);
-
 #define PANIC(msg) panic(msg, __FILE__, __LINE__);
 #define ASSERT(b) ((b) ? (void)0 : panic_assert(__FILE__, __LINE__, #b))
 
