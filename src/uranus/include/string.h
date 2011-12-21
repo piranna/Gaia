@@ -26,4 +26,9 @@ int strcmp(const char* str1, const char* str2);
 //// return dest.
 //char *strcpy(char *dest, const char *src)
 
+typedef int size_t;
+
+// Copy the NULL-terminated string src into dest up to num, and return dest.
+char* strncpy(char* dest, const char* src, size_t num);
+
 #endif /* STRING_H_ */
