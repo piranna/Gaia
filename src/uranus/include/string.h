@@ -8,6 +8,8 @@
 #ifndef STRING_H_
 #define STRING_H_
 
+typedef unsigned int size_t;
+
 // Compare two strings. Should return -1 if
 // str1 < str2, 0 if they are equal or 1 otherwise.
 int strcmp(const char* str1, const char* str2);
@@ -25,8 +27,6 @@ int strcmp(const char* str1, const char* str2);
 //// Copy the NULL-terminated string src into dest, and
 //// return dest.
 //char *strcpy(char *dest, const char *src)
-
-typedef int size_t;
 
 // Copy the NULL-terminated string src into dest up to num, and return dest.
 char* strncpy(char* dest, const char* src, size_t num);

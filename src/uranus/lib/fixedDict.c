@@ -18,6 +18,7 @@ void fixedDict_init(fixedDict* dict, pairKeyValue* pairs)
 	dict->length = 0;
 }
 
+
 void fixedDict_del(fixedDict* dict, char* key)
 {
 	// Look for the element
