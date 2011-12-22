@@ -16,6 +16,7 @@
 
 void init(void)
 {
+	// Let the exokernel know where the event manager is
 	syscall_set_eventmanager_send(eventmanager_send);
 
 	// Drivers

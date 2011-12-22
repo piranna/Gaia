@@ -12,3 +12,6 @@ Hardware text mode cursor
 
 RDOS
     http://www.rdos.net/rdos
+
+Scancodes
+    http://www.win.tue.nl/~aeb/linux/kbd/scancodes-1.html
