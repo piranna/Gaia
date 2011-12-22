@@ -1,5 +1,5 @@
 /*
- * fixedDict.c
+ * fixeddict->c
  *
  * Implements a fixed-size dictionary sorted alphabetically
  *
@@ -12,24 +12,30 @@
 #include <string.h>
 
 
-void fixedDict_del(fixedDict dict, char* key)
+void fixedDict_init(fixedDict* dict, pairKeyValue* pairs)
+{
+	dict->pairs = pairs;
+	dict->length = 0;
+}
+
+void fixedDict_del(fixedDict* dict, char* key)
 {
 	// Look for the element
 	int i = 0;
-	for(; i < dict.length; ++i)
+	for(; i < dict->length; ++i)
 	{
-		int cmp = strcmp(dict.pairs[i].key, key);
+		int cmp = strcmp(dict->pairs[i].key, key);
 
 		// We have found the dict entry, remove it and move the next ones
 		if(cmp == 0)
 		{
 			// Put on every entry the content of the next one
-			for(; i < dict.length-1; ++i)
-				dict.pairs[i] = dict.pairs[i+1];
+			for(; i < dict->length-1; ++i)
+				dict->pairs[i] = dict->pairs[i+1];
 
 			// Remove the last one
-			memset(dict.pairs[dict.length-1], 0, sizeof(pairKeyValue));
-			dict.length--;
+			memset(dict->pairs[dict->length-1], 0, sizeof(pairKeyValue));
+			dict->length--;
 		}
 
 		// Dict entry was not on the dict, do nothing
@@ -38,31 +44,31 @@ void fixedDict_del(fixedDict dict, char* key)
 	}
 }
 
-void* fixedDict_get(fixedDict dict, char* key)
+void* fixedDict_get(fixedDict* dict, char* key)
 {
 	// Look for the element
 	int i = 0;
-	for(; i < dict.length; ++i)
+	for(; i < dict->length; ++i)
 		// We have found the dict entry, return it
-		if(!strcmp(dict.pairs[i].key, key))
-			return dict.pairs[i].value;
+		if(!strcmp(dict->pairs[i].key, key))
+			return dict->pairs[i].value;
 
 	// Dict entry was not on the dict, return nothing
 	return 0;
 }
 
-void fixedDict_set(fixedDict dict, char* key, void* value)
+void fixedDict_set(fixedDict* dict, char* key, void* value)
 {
 	// Look for the element
 	int i = 0;
-	for(; i < dict.length; ++i)
+	for(; i < dict->length; ++i)
 	{
-		int cmp = strcmp(dict.pairs[i].key, key);
+		int cmp = strcmp(dict->pairs[i].key, key);
 
 		// We have found the dict entry, update it
 		if(cmp == 0)
 		{
-			dict.pairs[i].value = value;
+			dict->pairs[i].value = value;
 			return;
 		}
 
@@ -73,19 +79,19 @@ void fixedDict_set(fixedDict dict, char* key, void* value)
 			unsigned int capacity = sizeof(dict)/sizeof(void*);
 
 			// Check if we have enought space to add the new entry
-			if(dict.length == capacity)
+			if(dict->length == capacity)
 				// We should raise an exception...
 				return;
 
 			// Put on every entry the content of the next one
-			int j = dict.length;
+			int j = dict->length;
 			for(; j > i; --j)
-				dict.pairs[j] = dict.pairs[j-1];
+				dict->pairs[j] = dict->pairs[j-1];
 		}
 	}
 
 	// Set the new entry
-	strncpy(dict.pairs[i].key, key, sizeof(dict.pairs[i].key));
-	dict.pairs[i].value = value;
-	dict.length++;
+	strncpy(dict->pairs[i].key, key, sizeof(dict->pairs[i].key));
+	dict->pairs[i].value = value;
+	dict->length++;
 }
