@@ -18,22 +18,23 @@ static fixedDict eventmanager_events;
 
 void eventmanager_init(void)
 {
-	eventmanager_events.pairs = eventmanager_events_pairs;
-	eventmanager_events.length = 0;
+	fixedDict_init(&eventmanager_events, eventmanager_events_pairs);
 }
 
 
-void eventmanager_attach(char* event, void* func)
+void eventmanager_attach(char* event, event_func func)
 {
-//	eventmanager_events
+	fixedDict_set(&eventmanager_events, event, func);
 }
+
 void eventmanager_deattach(char* event)
 {
-	fixedDict_del(eventmanager_events, event);
+	fixedDict_del(&eventmanager_events, event);
 }
 
 
-void eventmanager_send(char* key, int data)
+void eventmanager_send(char* event, int data)
 {
-	if(!strcmp(key, "putchar"))	VGA_text_putchar(data);
+	event_func func = fixedDict_get(&eventmanager_events, event);
+	if(func) func(data);
 }

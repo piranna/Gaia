@@ -8,9 +8,11 @@
 #ifndef EVENTMANAGER_H_
 #define EVENTMANAGER_H_
 
-void eventmanager_attach(char* event, void*);
+typedef int (*event_func)(int);
+
+void eventmanager_attach(char* event, event_func);
 void eventmanager_deattach(char* event);
 
-void eventmanager_send(char* key, int data);
+void eventmanager_send(char* event, int data);
 
 #endif /* EVENTMANAGER_H_ */
