@@ -31,7 +31,7 @@ CFLAGS = $(CWARN) $(CDEBUGS) $(CINCS) \
          -m32 -nostdinc -fno-builtin -nostdlib -fno-stack-protector
 
 
-.PHONY: all clean run
+.PHONY: all clean
 
 all : $(TARGET).a
 
