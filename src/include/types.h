@@ -1,8 +1,8 @@
 // types.h -- Defines typedefs and some global functions.
 //             Based on code from JamesM's kernel development tutorials.
 
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef TYPES_H
+#define TYPES_H
 
 // Some nice typedefs, to standardise sizes across platforms.
 // These typedefs are written for 32-bit X86.
@@ -13,6 +13,4 @@ typedef          short s16int;
 typedef unsigned char  u8int;
 typedef          char  s8int;
 
-typedef void (*t_em_send)(char*,int);
-
-#endif // COMMON_H
+#endif // TYPES_H
