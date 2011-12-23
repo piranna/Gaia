@@ -10,6 +10,7 @@
 #include <string.h>
 
 #include "irq.h"
+#include "sys/io.h"
 
 
 // Lets us access our ASM functions from our C code.

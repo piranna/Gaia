@@ -6,6 +6,7 @@
 #include "irq.h"
 
 #include "idt.h"
+#include "sys/io.h"
 
 
 // These extern directives let us access the addresses of our ASM IRQ handlers.
