@@ -5,7 +5,7 @@
 //                       Rewritten for JamesM's kernel development tutorials.
 //
 
-#include "common.h"
+#include "types.h"
 
 
 void gdt_init(void);

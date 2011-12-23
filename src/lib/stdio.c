@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-#include "common.h"
+#include "types.h"
 
 
 extern t_em_send uranus_em_send;

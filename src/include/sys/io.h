@@ -4,7 +4,7 @@
 #ifndef IO_H
 #define IO_H
 
-#include "common.h"
+#include "types.h"
 
 // Write data to the specified port.
 void outb(u16int port, u8int value);
