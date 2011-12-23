@@ -39,7 +39,7 @@ all : lib$(TARGET).a
 clean :
 #	$(MAKE) clean -C $(SOURCE_PATH)/asm
 
-	$(RM) $(TARGET).out $(OBJS)
+	$(RM) lib$(TARGET).a $(OBJS)
 
 
 # Rules

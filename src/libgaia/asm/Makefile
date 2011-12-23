@@ -23,7 +23,7 @@ ASFLAGS=-felf
 all : $(TARGET).a
 
 clean :
-	$(RM) $(TARGET).out $(OBJS)
+	$(RM) $(TARGET).a $(OBJS)
 
 
 # Rules
