@@ -50,7 +50,7 @@ unsigned char kbdus[128] =
 static void keyboard_handler(registers_t* r)
 {
     /* Read from the keyboard's data buffer */
-    unsigned char scancode = syscall_inb(0x60);
+    unsigned char scancode = inb(0x60);
 
     /* If the top bit of the byte we read from the keyboard is
     *  set, that means that a key has just been released */
@@ -80,5 +80,5 @@ static void keyboard_handler(registers_t* r)
 /* Installs the keyboard handler into IRQ1 */
 void keyboard_init(void)
 {
-	syscall_irq_register_handler(IRQ1, &keyboard_handler);
+	irq_register_handler(IRQ1, &keyboard_handler);
 }

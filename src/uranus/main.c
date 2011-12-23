@@ -18,7 +18,7 @@
 void init(void)
 {
 	// Let the exokernel know where the event manager is
-	syscall_set_eventmanager_send(eventmanager_send);
+	set_eventmanager_send(eventmanager_send);
 
 	// Drivers
     PIT_init(100);	// Initialise the PIT to 100Hz

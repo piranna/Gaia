@@ -35,13 +35,13 @@ void PIT_init(u32int frequency)
    u32int divisor = 1193180 / frequency;
 
    // Firstly, register our timer callback.
-   syscall_irq_register_handler(IRQ0, &PIT_handler);
+   irq_register_handler(IRQ0, &PIT_handler);
 
    // Send the command byte.
-   syscall_outb(0x43, 0x36);
+   outb(0x43, 0x36);
 
    // Divisor has to be sent byte-wise, so split here into upper/lower bytes.
    // Send the frequency divisor.
-   syscall_outb(0x40, (u8int)(divisor & 0xFF));
-   syscall_outb(0x40, (u8int)((divisor>>8) & 0xFF));
+   outb(0x40, (u8int)(divisor & 0xFF));
+   outb(0x40, (u8int)((divisor>>8) & 0xFF));
 }
