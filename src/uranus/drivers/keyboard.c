@@ -7,6 +7,10 @@
 
 #include "syscall_userspace.h"
 
+/* hardcoded */
+#define IRQ1  33	// keyboard
+/* hardcoded */
+
 
 /* KBDUS means US Keyboard Layout. This is a scancode table
 *  used to layout a standard US keyboard. I have left some
