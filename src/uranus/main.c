@@ -9,7 +9,7 @@
 
 
 #include "eventmanager.h"
-#include "syscall_userspace.h"
+#include "syscall.h"
 
 #include "drivers/PIT.h"
 #include "drivers/VGA.h"

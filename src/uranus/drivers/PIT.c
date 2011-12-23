@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 
-#include "syscall_userspace.h"
+#include "syscall.h"
 
 /* hardcoded */
 #define IRQ0  32	// PIT

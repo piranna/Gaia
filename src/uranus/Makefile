@@ -7,7 +7,7 @@ SOURCE_PATH = .
 SOURCE_LIBS = ./lib
 
 SOURCES  = $(SOURCE_PATH)/main.c
-SOURCES += $(SOURCE_PATH)/syscall_userspace.c
+SOURCES += $(SOURCE_PATH)/syscall.c
 SOURCES += $(SOURCE_PATH)/eventmanager.c
 
 DRIVERS  = $(SOURCE_PATH)/drivers/PIT.c $(SOURCE_PATH)/drivers/VGA.c
