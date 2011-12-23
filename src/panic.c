@@ -1,7 +1,7 @@
-// common.c -- Defines some global functions.
-//             Based on code from JamesM's kernel development tutorials.
+// panic.c -- Defines some panic functions
+//            Based on code from JamesM's kernel development tutorials.
 
-#include "common.h"
+#include "panic.h"
 
 #include <stdio.h>
 
