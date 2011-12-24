@@ -8,31 +8,6 @@
 #include "sys/io.h"
 
 
-int in(const u8int bytepower, const u16int port)
-{
-	switch(bytepower)
-	{
-		case 0:	return inb(port);
-		case 1:	return inw(port);
-		case 2:	return inl(port);
-	}
-
-	// We should raise some kind of exception to userspace...
-	return 0;
-}
-
-void out(const u8int bytepower, const u16int port, const u8int value)
-{
-	switch(bytepower)
-	{
-		case 0:	outb(port, value);
-		case 1:	outw(port, value);
-		case 2:	outl(port, value);
-	}
-
-	// We should raise some kind of exception to userspace...
-}
-
 t_em_send uranus_em_send = 0;
 void set_eventmanager_send(t_em_send em_send)
 {
