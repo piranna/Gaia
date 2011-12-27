@@ -41,7 +41,8 @@ clean :
 	$(RM) $(TARGET).out $(OBJS)
 
 run :
-	qemu --kernel $(TARGET).out
+#	qemu --kernel $(TARGET).out
+	qemu --kernel $(TARGET).out -m 196
 
 
 # Rules

@@ -37,7 +37,6 @@ void switch_to_user_mode(void)
 		");
 }
 
-
 // Initialisation routine - zeroes all the interrupt service routines,
 // initialises the GDT and IDT.
 void gaia_init(void)
@@ -45,7 +44,11 @@ void gaia_init(void)
     gdt_init();	// Initialise the global descriptor table.
     idt_init();	// Initialise the interrupt descriptor table.
 
-//    paging_init();
+    // The size of physical memory. For the moment we assume it is 16MB big.
+//    paging_init(0x1000000);
+//    u32int* ptr = (u32int*)0xA0000000;
+//    u32int do_page_fault = *ptr;
+
     syscall_init();
 
     // Enable interruptions
@@ -64,7 +67,8 @@ void gaia_main(unsigned long magic, unsigned long addr)
 
 	// Start the userspace kernel
 	main();
+    paging_init(0x1000000);
 
 	// Show multiboot info
-	multiboot_print_info(magic, addr);
+//	multiboot_print_info(magic, addr);
 }

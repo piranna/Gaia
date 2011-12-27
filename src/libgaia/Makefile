@@ -9,7 +9,7 @@ SOURCE_LIBS = ./lib
 SOURCES       = $(SOURCE_PATH)/multiboot.c
 SOURCES      += $(SOURCE_PATH)/gdt.c $(SOURCE_PATH)/idt.c $(SOURCE_PATH)/irq.c
 SOURCES      += $(SOURCE_PATH)/isr.c
-#SOURCES      += $(SOURCE_PATH)/kheap.c $(SOURCE_PATH)/paging.c
+SOURCES      += $(SOURCE_PATH)/kheap.c $(SOURCE_PATH)/paging.c
 SOURCES      += $(SOURCE_PATH)/syscall.c $(SOURCE_PATH)/sys/io.c
 SOURCES      += $(SOURCE_PATH)/panic.c
 
