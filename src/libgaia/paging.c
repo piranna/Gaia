@@ -10,6 +10,10 @@
 #include "kheap.h"
 #include "panic.h"
 
+// Macros used in the bitset algorithms.
+#define INDEX_FROM_BIT(a) (a/(8*4))
+#define OFFSET_FROM_BIT(a) (a%(8*4))
+
 // The kernel's page directory
 page_directory_t* kernel_directory = 0;
 
@@ -17,16 +21,12 @@ page_directory_t* kernel_directory = 0;
 page_directory_t* current_directory = 0;
 
 // A bitset of frames - used or free.
-u32int* frames;
+u32int frames[INDEX_FROM_BIT(0x1000000 / 0x1000)];
 u32int nframes;
 
 // Defined in kheap.c
 extern u32int placement_address;
 //extern heap_t* kheap;
-
-// Macros used in the bitset algorithms.
-#define INDEX_FROM_BIT(a) (a/(8*4))
-#define OFFSET_FROM_BIT(a) (a%(8*4))
 
 // Static function to set a bit in the frames bitset
 static void set_frame(u32int frame_addr)
@@ -109,15 +109,15 @@ void paging_init(u32int mem_end_page)
 {
     nframes = mem_end_page / 0x1000;
     printf("*** nframes = %d ***\n", nframes);
-    frames = (u32int*)kmalloc(INDEX_FROM_BIT(nframes));
-//    memset((u8int*)frames, 0, INDEX_FROM_BIT(nframes));
+//    frames = (u32int*)kmalloc(INDEX_FROM_BIT(nframes));
+    memset((u8int*)frames, 0, INDEX_FROM_BIT(nframes));
 //    printf("*** frames = 0x%x ***\n", frames);
 
     // Let's make a page directory.
     kernel_directory = (page_directory_t*)kmalloc_a(sizeof(page_directory_t));
 //    printf("*** kernel_directory = 0x%x ***\n", kernel_directory);
-//    memset((u8int*)kernel_directory, 0, sizeof(page_directory_t));
-//    kernel_directory->physicalAddr = (u32int)kernel_directory->tablesPhysical;
+    memset((u8int*)kernel_directory, 0, sizeof(page_directory_t));
+    kernel_directory->physicalAddr = (u32int)kernel_directory->tablesPhysical;
 
 //    // Map some pages in the kernel heap area.
 //    // Here we call paging_page_get but not paging_frame_alloc. This causes page_table_t's
@@ -137,7 +137,7 @@ void paging_init(u32int mem_end_page)
     // computed on-the-fly rather than once at the start.
     // Allocate a lil' bit extra so the kernel heap can be
     // initialised properly.
-//    int i = 0;
+    int i = 0;
 //    while (i < placement_address)
 ////    while (i < 0x400000 ) //placement_address+0x1000)
 //    {
@@ -151,7 +151,7 @@ void paging_init(u32int mem_end_page)
 //        paging_frame_alloc( paging_page_get(i, 1, kernel_directory), 0, 0);
 
 //    // Before we enable paging, we must register our page fault handler.
-//    irq_handler_register(14, paging_handle_pageFault);
+    irq_handler_register(14, paging_handle_pageFault);
 
 //    // Now, enable paging!
 //    switch_page_directory(kernel_directory);

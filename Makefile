@@ -28,6 +28,8 @@ CFLAGS = $(CWARN) $(CDEBUGS) $(CINCS) \
          -fno-strict-aliasing \
          -m32 -nostdinc -fno-builtin -nostdlib -fno-stack-protector
 
+LD_FLAGS = -Tlink.ld
+
 
 .PHONY: all clean run
 
@@ -41,8 +43,8 @@ clean :
 	$(RM) $(TARGET).out $(OBJS)
 
 run :
-#	qemu --kernel $(TARGET).out
-	qemu --kernel $(TARGET).out -m 196
+	qemu --kernel $(TARGET).out
+#	qemu --kernel $(TARGET).out -m 196
 
 
 # Rules
@@ -51,5 +53,6 @@ $(TARGET).out : $(OBJS)
 	$(MAKE) -C $(SOURCE_PATH)/libgaia/asm
 	$(MAKE) -C $(SOURCE_PATH)/uranus
 
-	$(CC) -o $@ $(OBJS) $(LIB_OBJS) -m32 -nostdinc -nostdlib -fno-builtin
+	$(LD) $(LD_FLAGS) -o $@ $(OBJS) $(LIB_OBJS) -melf_i386
+#	$(CC) -o $@ $(OBJS) $(LIB_OBJS) -m32 -nostdinc -nostdlib -fno-builtin
 #	$(LD) -o $@ $(OBJS) $(LIB_OBJS) -Ttext 0x100000 -melf_i386
