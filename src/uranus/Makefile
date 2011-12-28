@@ -11,7 +11,7 @@ SOURCES += $(SOURCE_PATH)/syscall.c
 SOURCES += $(SOURCE_PATH)/eventmanager.c
 
 DRIVERS  = $(SOURCE_PATH)/drivers/PIT.c $(SOURCE_PATH)/drivers/VGA.c
-DRIVERS += $(SOURCE_PATH)/drivers/keyboard.c
+DRIVERS += $(SOURCE_PATH)/drivers/keyboard.c $(SOURCE_PATH)/drivers/term.c
 
 SOURCES_LIBS  = $(SOURCE_LIBS)/fixedDict.c
 #SOURCES_LIBS += $(SOURCE_LIBS)/ordered_array.c

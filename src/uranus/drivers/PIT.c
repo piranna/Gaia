@@ -13,7 +13,7 @@
 #include "syscall.h"
 
 
-static void PIT_handler(int dumb)
+static void PIT_handler(void)
 {
 	static u32int tick = 0;
 
