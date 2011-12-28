@@ -17,6 +17,6 @@ int syscall_outb(const u16int port, const u8int value)
 	return syscall_out(0, port,value);
 }
 
-DEFN_SYSCALL2(irq_register_handler, 2, const u8int, const isr_t);
+DEFN_SYSCALL2(irq_handler_register, 2, const u8int, const isr_t);
 
 DEFN_SYSCALL1(set_eventmanager_send, 3, const t_em_send)
