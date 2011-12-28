@@ -43,7 +43,7 @@ static unsigned char kbdus[128] =
 };
 
 /* Handles the keyboard interrupt */
-static void keyboard_handler(int dumb)
+static void keyboard_handler(void)
 {
     /* Read from the keyboard's data buffer */
     unsigned char scancode = syscall_inb(0x60);
@@ -54,6 +54,8 @@ static void keyboard_handler(int dumb)
     {
         /* You can use this one to see if the user released the
         *  shift, alt, or control keys... */
+    	eventmanager_send("keyboard/release/scancode",scancode);
+    	eventmanager_send("keyboard/release/character",kbdus[scancode]);
     }
     else
     {
@@ -69,7 +71,8 @@ static void keyboard_handler(int dumb)
         *  to the above layout to correspond to 'shift' being
         *  held. If shift is held using the larger lookup table,
         *  you would add 128 to the scancode when you look for it */
-    	eventmanager_send("putchar",kbdus[scancode]);
+    	eventmanager_send("keyboard/press/scancode",scancode);
+    	eventmanager_send("keyboard/press/character",kbdus[scancode]);
     }
 }
 

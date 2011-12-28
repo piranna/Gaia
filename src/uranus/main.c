@@ -14,6 +14,7 @@
 #include "drivers/PIT.h"
 #include "drivers/VGA.h"
 #include "drivers/keyboard.h"
+#include "drivers/term.h"
 
 void init(void)
 {
@@ -22,9 +23,12 @@ void init(void)
 	syscall_set_eventmanager_send(eventmanager_send);
 
 	// Drivers
-    PIT_init(100);	// Initialise the PIT to 100Hz
     VGA_init();
+
+//    PIT_init(100);	// Initialise the PIT to 100Hz
     keyboard_init();
+
+    term_init();
 }
 
 void main(void)

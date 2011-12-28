@@ -1,45 +1,44 @@
-/* Convert the integer D to a string and save the string in BUF. If
-	BASE is equal to 'd', interpret that D is decimal, and if BASE is
-	equal to 'x', interpret that D is hexadecimal. */
+/* Converts an integer value to a null-terminated string using the specified
+ * base and stores the result in the array given by str parameter.
+ *
+ * If `base` is 10 and `value` is negative, the resulting string is preceded
+ * with a minus sign (-). With any other `base`, `value` is always considered
+ * unsigned.
+ *
+ * `str` should be an array long enough to contain any possible value:
+ * (sizeof(int)*8+1) for radix=2, i.e. 17 bytes in 16-bits platforms and 33 in
+ * 32-bits platforms.
+ */
 char* itoa(int value, char* str, int base)
 {
-	char *p = str;
-	char *p1, *p2;
-	unsigned long ud = value;
-	int divisor = 10;
+	char* p1 = str;
+	char* p2 = str;
 
-	/* If %d is specified and D is minus, put `-' in the head. */
-	if(base == 'd' && value < 0)
+	/* If `base` is 10 and `value` is minus, put '-' in the head. */
+	if(base == 10 && value < 0)
 	{
-		*p++ = '-';
-		str++;
-		ud = -value;
+		p1++;
+		*p2++ = '-';
+		value = -value;
 	}
-	else if(base == 'x')
-		divisor = 16;
 
-	/* Divide UD by DIVISOR until UD == 0. */
+	/* Divide `value` by `base` until `value` == 0. */
 	do
 	{
-		int remainder = ud % divisor;
+		int remainder = value % base;
 
-		*p++ = (remainder < 10) ? remainder + '0' : remainder + 'a' - 10;
+		*p2++ = remainder + (remainder < 10 ?'0' :'a' - 10);
 	}
-	while(ud /= divisor);
+	while(value /= base);
 
-	/* Terminate BUF. */
-	*p = 0;
+	/* Terminate and reverse`str`. */
+	*p2-- = '\0';
 
-	/* Reverse BUF. */
-	p1 = str;
-	p2 = p - 1;
-	while (p1 < p2)
+	while(p1 < p2)
 	{
 		char tmp = *p1;
-		*p1 = *p2;
-		*p2 = tmp;
-		p1++;
-		p2--;
+		*p1++ = *p2;
+		*p2-- = tmp;
 	}
 
 	return str;

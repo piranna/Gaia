@@ -26,7 +26,7 @@ typedef struct registers
 typedef void (*isr_t)(registers_t*);
 /* hardcoded */
 
-DECL_SYSCALL2(irq_register_handler, const u8int, const isr_t)
+DECL_SYSCALL2(irq_handler_register, const u8int, const isr_t)
 
 #include "eventmanager.h"
 

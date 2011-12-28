@@ -13,4 +13,6 @@ typedef          short s16int;
 typedef unsigned char  u8int;
 typedef          char  s8int;
 
+typedef unsigned int size_t;
+
 #endif // TYPES_H
