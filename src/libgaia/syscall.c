@@ -18,12 +18,11 @@ void set_eventmanager_send(t_em_send em_send)
 static void* syscalls[] =
 {
 	&in,
-    &out,
-    &irq_handler_register,
-    &set_eventmanager_send,
+	&out,
+	&irq_handler_register,
+	&set_eventmanager_send,
 };
 u32int num_syscalls = sizeof(syscalls)/sizeof(void*);
-//u32int num_syscalls = 4;
 
 
 static void syscall_handler(registers_t* regs)

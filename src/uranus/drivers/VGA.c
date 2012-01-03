@@ -16,8 +16,8 @@
 #define TAB_WIDTH 4
 
 /* Variables. */
-static int xpos;	/* Save the X position. */
-static int ypos;	/* Save the Y position. */
+static int xpos = 0;	/* Save the X position. */
+static int ypos = 0;	/* Save the Y position. */
 
 /* Point to the video memory. */
 static volatile unsigned char* video = (unsigned char*)VIDEO;
@@ -26,8 +26,8 @@ static volatile unsigned char* video = (unsigned char*)VIDEO;
 /* Clear the screen and initialize VIDEO, XPOS and YPOS. */
 static void VGA_text_cls(void)
 {
-	int i;
-	for(i = 0; i < COLUMNS * LINES * 2; i++)
+	int i = 0;
+	for(; i < COLUMNS * LINES * 2; i++)
 		*(video + i) = 0;
 
 	xpos = 0;
@@ -35,6 +35,7 @@ static void VGA_text_cls(void)
 }
 
 
+// Scrolls the text on the screen up by one line.
 static void VGA_text_linefeed(void)
 {
 	int i = 0;

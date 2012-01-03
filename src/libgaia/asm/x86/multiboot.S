@@ -1,4 +1,4 @@
-/* boot.S - bootstrap the kernel */
+/* multiboot.S - bootstrap the kernel */
 /* Copyright (C) 1999, 2001  Free Software Foundation, Inc.
 
     This program is free software; you can redistribute it and/or modify
@@ -30,9 +30,14 @@
 
 /* The flags for the Multiboot header. */
 #ifdef __ELF__
-#   define MULTIBOOT_HEADER_FLAGS   0x00000007
+#   define MULTIBOOT_HEADER_FLAGS   MULTIBOOT_PAGE_ALIGN  |\
+                                    MULTIBOOT_MEMORY_INFO |\
+                                    MULTIBOOT_VIDEO_MODE
 #else
-#   define MULTIBOOT_HEADER_FLAGS   0x00010007
+#   define MULTIBOOT_HEADER_FLAGS   MULTIBOOT_PAGE_ALIGN  |\
+                                    MULTIBOOT_MEMORY_INFO |\
+                                    MULTIBOOT_VIDEO_MODE  |\
+                                    MULTIBOOT_AOUT_KLUDGE
 #endif
 
 

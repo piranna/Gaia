@@ -63,6 +63,9 @@ void irq_handler(registers_t regs)
 
 void irq_init(void)
 {
+    // Nullify all the interrupt handlers.
+    memset(&irq_entries, 0, sizeof(isr_t)*256);
+
     idt_set_gate(IRQ0,  (u32int)irq0 , 0x08, 0x8E);
     idt_set_gate(IRQ1,  (u32int)irq1 , 0x08, 0x8E);
     idt_set_gate(IRQ2,  (u32int)irq2 , 0x08, 0x8E);

@@ -5,11 +5,16 @@
 //                       Rewritten for JamesM's kernel development tutorials.
 //
 
+#ifndef GDT_H
+#define GDT_H
+
 #include "types.h"
 
-
+// Initialisation function is publicly accessible.
 void gdt_init(void);
 
+// Allows the kernel stack in the TSS to be changed.
+void set_kernel_stack(u32int stack);
 
 // This structure contains the value of one GDT entry.
 // We use the attribute 'packed' to tell GCC not to change
@@ -36,3 +41,5 @@ struct gdt_ptr_struct
 } __attribute__((packed));
 
 typedef struct gdt_ptr_struct gdt_ptr_t;
+
+#endif	/* GDT_H */

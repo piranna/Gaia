@@ -6,7 +6,7 @@
  */
 
 // PIT.h -- Defines the interface for all PIT-related functions.
-// Based on code for JamesM's kernel development tutorials.
+//          Based on code for JamesM's kernel development tutorials.
 
 #ifndef PIT_H_
 #define PIT_H_

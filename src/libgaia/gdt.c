@@ -7,9 +7,6 @@
 
 #include "gdt.h"
 
-#include <string.h>
-
-#include "types.h"
 #include "tss.h"
 
 
@@ -21,8 +18,7 @@ extern void tss_flush(void);
 static void gdt_set_gate(s32int,u32int,u32int,u8int,u8int);
 static void tss_write(s32int,u16int,u32int);
 
-
-gdt_entry_t gdt_entries[5];
+gdt_entry_t gdt_entries[6];
 gdt_ptr_t   gdt_ptr;
 tss_entry_t tss_entry;
 
@@ -86,7 +82,7 @@ static void tss_write(s32int num, u16int ss0, u32int esp0)
 	tss_entry.ss = tss_entry.ds = tss_entry.es = tss_entry.fs = tss_entry.gs = 0x13;
 }
 
-//void set_kernel_stack(u32int stack)
-//{
-//   tss_entry.esp0 = stack;
-//}
+void set_kernel_stack(u32int stack)
+{
+   tss_entry.esp0 = stack;
+}

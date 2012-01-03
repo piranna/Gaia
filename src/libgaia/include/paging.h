@@ -63,17 +63,8 @@ void switch_page_directory(page_directory_t* new);
 page_t* paging_page_get(u32int address, int make, page_directory_t* dir);
 
 /**
-   Handler for page faults.
-**/
-void paging_handle_pageFault(registers_t *regs);
-
-/**
    Makes a copy of a page directory.
 **/
-//page_directory_t* clone_directory(page_directory_t* src);
-
-
-void paging_frame_alloc(page_t* page, int is_kernel, int is_writeable);
-void paging_frame_free(page_t* page);
+page_directory_t* clone_directory(page_directory_t *src);
 
 #endif

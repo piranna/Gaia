@@ -53,9 +53,6 @@ void isr_handler(registers_t regs)
 	// bit (0x80) is set, regs.int_no will be very large (about 0xffffff80).
     u8int int_no = regs.int_no & 0xFF;
 
-//if(regs.int_no!=13)
-//printf("isr_handler: [%d] %d -> %d\n", int_no, regs.ebx,regs.ecx);
-
     isr_t handler = irq_entries[int_no];
     if(handler)
         handler(&regs);

@@ -141,8 +141,8 @@
  };
  typedef struct multiboot_elf_section_header_table multiboot_elf_section_header_table_t;
 
- struct multiboot_info
- {
+struct multiboot_info
+{
    /* Multiboot info version number */
    multiboot_uint32_t flags;
 
@@ -190,7 +190,7 @@
    multiboot_uint16_t vbe_interface_seg;
    multiboot_uint16_t vbe_interface_off;
    multiboot_uint16_t vbe_interface_len;
- };
+ }  __attribute__((packed));
  typedef struct multiboot_info multiboot_info_t;
 
  struct multiboot_mmap_entry
