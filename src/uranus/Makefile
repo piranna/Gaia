@@ -18,8 +18,7 @@ SOURCES_LIBS = $(SOURCE_LIBS)/fixedDict.c #$(SOURCE_LIBS)/dict.c
 
 OBJS = $(SOURCES:.c=.o) $(DRIVERS:.c=.o) $(SOURCES_LIBS:.c=.o)
 
-CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement
-#CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Werror
+CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement #-Werror
 
 CINCS  = -I$(SOURCE_PATH)/include -I$(SOURCE_PATH)/../include
 

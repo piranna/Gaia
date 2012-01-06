@@ -26,7 +26,7 @@ void printf(const char* format, ...)
 
 	arg++;
 
-	while((c = *format++) != 0)
+	while(c = *format++)
 	{
 		if(c == '%')
 		{
@@ -42,14 +42,14 @@ void printf(const char* format, ...)
 				case 'x':
 					p = itoa(*((int*)arg++), buf, c=='x' ?16 :10);
 
-					goto string;
+					goto printf_string;
 
 				case 's':
 					p = *arg++;
 					if(!p)
 						p = "(null)";
 
-					string:
+					printf_string:
 						while(*p)
 							putchar(*p++);
 					break;
@@ -93,7 +93,7 @@ int snprintf(char* str, size_t size, const char* format,...)
 				case 'x':
 					p = itoa(*((int*)arg++), buf, c=='x' ?16 :10);
 
-					goto string;
+					goto snprintf_string;
 
 				// string
 				case 's':
@@ -101,7 +101,7 @@ int snprintf(char* str, size_t size, const char* format,...)
 					if(!p)
 						p = "(null)";
 
-					string:
+					snprintf_string:
 						while(*p && size)
 						{
 							*str = *p++;
