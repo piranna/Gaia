@@ -232,8 +232,6 @@ struct multiboot_info
 ////   multiboot_uint32_t drive_ports[];
 // } multiboot_drive_t;
 
- void multiboot_print_info(unsigned long magic, unsigned long addr);
-
  #endif /* ! ASM_FILE */
 
  #endif /* ! MULTIBOOT_HEADER */

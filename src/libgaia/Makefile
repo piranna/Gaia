@@ -7,8 +7,7 @@ SOURCE_PATH = .
 SOURCE_LIBS = ./lib
 PLATFORM = x86
 
-SOURCES  = $(SOURCE_PATH)/multiboot.c
-SOURCES += $(SOURCE_PATH)/gdt.c $(SOURCE_PATH)/heap.c $(SOURCE_PATH)/idt.c
+SOURCES  = $(SOURCE_PATH)/gdt.c $(SOURCE_PATH)/heap.c $(SOURCE_PATH)/idt.c
 SOURCES += $(SOURCE_PATH)/irq.c $(SOURCE_PATH)/isr.c
 SOURCES += $(SOURCE_PATH)/kheap.c $(SOURCE_PATH)/panic.c $(SOURCE_PATH)/paging.c
 SOURCES += $(SOURCE_PATH)/syscall.c $(SOURCE_PATH)/sys/io.c

@@ -43,8 +43,5 @@ void gaia_main(unsigned long magic, unsigned long addr)
 	// Start the userspace kernel
 	main();
 
-//	printf("Hello, user world!\n");
-
-	// Show multiboot info
-//	multiboot_print_info(magic, addr);
+	printf("Hello, user world!\n");
 }
