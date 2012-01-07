@@ -7,6 +7,7 @@
 
 #include "gdt.h"
 
+#include "string.h"
 #include "tss.h"
 
 

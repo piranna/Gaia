@@ -6,6 +6,7 @@
 #include "irq.h"
 
 #include "idt.h"
+#include "string.h"
 #include "sys/io.h"
 
 
