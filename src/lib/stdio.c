@@ -26,7 +26,7 @@ void printf(const char* format, ...)
 
 	arg++;
 
-	while(c = *format++)
+	while((c = *format++))
 	{
 		if(c == '%')
 		{
