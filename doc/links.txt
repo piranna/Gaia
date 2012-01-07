@@ -16,3 +16,6 @@ RDOS
 
 Scancodes
     http://www.win.tue.nl/~aeb/linux/kbd/scancodes-1.html
+
+GCC warning flags
+    http://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html
