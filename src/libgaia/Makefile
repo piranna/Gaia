@@ -33,7 +33,6 @@ else
 endif
 
 CFLAGS = $(CINCS) $(CWARN) $(CDEBUGS) \
-         -fno-strict-aliasing \
          -fno-builtin -nostdinc -nostdlib -m32
 
 AS_FLAGS = -felf
