@@ -13,7 +13,7 @@ SOURCES_LIBS += $(SOURCE_LIBS)/stdlib.c
 SOURCES_LIBS += $(SOURCE_LIBS)/string.c
 
 LIB_OBJS  = $(SOURCE_PATH)/libgaia/libgaia.a $(SOURCE_PATH)/uranus/uranus.a
-LIB_OBJS += $(SOURCE_PATH)/libgaia/asm/gaia_asm.a
+#LIB_OBJS += $(SOURCE_PATH)/libgaia/asm/gaia_asm.a
 
 OBJS = $(SOURCES:.c=.o) $(SOURCES_LIBS:.c=.o)
 
@@ -39,20 +39,20 @@ all : $(TARGET).out
 
 clean :
 	$(MAKE) clean -C $(SOURCE_PATH)/libgaia
-	$(MAKE) clean -C $(SOURCE_PATH)/libgaia/asm
+#	$(MAKE) clean -C $(SOURCE_PATH)/libgaia/asm
 	$(MAKE) clean -C $(SOURCE_PATH)/uranus
 
 	$(RM) $(TARGET).out $(OBJS)
 
 run :
-	qemu --kernel $(TARGET).out -initrd initrd.img
+	qemu --kernel $(TARGET).out
 #	qemu --kernel $(TARGET).out -initrd initrd.img -m 196
 
 
 # Rules
 $(TARGET).out : $(OBJS)
 	$(MAKE) -C $(SOURCE_PATH)/libgaia
-	$(MAKE) -C $(SOURCE_PATH)/libgaia/asm
+#	$(MAKE) -C $(SOURCE_PATH)/libgaia/asm
 	$(MAKE) -C $(SOURCE_PATH)/uranus
 
 #	$(LD) $(LD_FLAGS) -o $@ $(OBJS) $(LIB_OBJS)

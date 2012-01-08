@@ -52,8 +52,8 @@ lib$(TARGET).a : $(OBJS)
 #	$(CC) -o $@ $(OBJS) $(CFLAGS)
 #	$(LD) -o $@ $(OBJS) -Ttext 0x100000 -melf_i386
 
-#.S.o:
-#	$(CC) -o $@ -c $< $(CFLAGS)
+.S.o:
+	$(CC) -o $@ -c $< $(CFLAGS)
 
 .s.o:
 	nasm $(AS_FLAGS) $<
