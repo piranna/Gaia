@@ -11,6 +11,7 @@
 
 #include "gdt.h"
 #include "idt.h"
+#include "interruptmanager.h"
 //#include "paging.h"
 #include "syscall.h"
 
@@ -47,6 +48,8 @@ void gaia_init(void)
 
 //    paging_init();
     syscall_init();
+
+//    interruptmanager_init();
 
     // Enable interruptions
     asm volatile("sti");
