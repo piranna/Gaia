@@ -52,6 +52,18 @@ static void keyboard_handler(void)
     *  set, that means that a key has just been released */
     if(scancode & 0x80)
     {
+        scancode -= 0x80;   // Get key from scancode
+
+        switch(scancode)
+        {
+            case 42:    // LShift
+            case 54:    // RShift
+
+            case 29:    // CTRL
+            
+            case 56:    // Alt
+        }
+
         /* You can use this one to see if the user released the
         *  shift, alt, or control keys... */
     	eventmanager_send("keyboard/release/scancode",scancode);
@@ -71,6 +83,17 @@ static void keyboard_handler(void)
         *  to the above layout to correspond to 'shift' being
         *  held. If shift is held using the larger lookup table,
         *  you would add 128 to the scancode when you look for it */
+
+        switch(scancode)
+        {
+            case 42:    // LShift
+            case 54:    // RShift
+
+            case 29:    // CTRL
+            
+            case 56:    // Alt
+        }
+
     	eventmanager_send("keyboard/press/scancode",scancode);
     	eventmanager_send("keyboard/press/character",kbdus[scancode]);
     }
