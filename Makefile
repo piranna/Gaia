@@ -28,7 +28,8 @@ else
 endif
 
 CFLAGS = $(CWARN) $(CDEBUGS) $(CINCS) \
-         -fno-builtin -nostdinc -nostdlib -m32
+         -fno-strict-aliasing \
+         -O2 -m32 -nostdinc -fno-builtin -nostdlib -fno-stack-protector
 
 LD_FLAGS = -Tlink.ld -melf_i386
 

@@ -2,7 +2,8 @@
 
 #include <stdlib.h>
 
-#include "syscall.h"
+#include "interruptmanager.h"
+//#include "syscall.h"
 
 
 extern t_em_send uranus_em_send;

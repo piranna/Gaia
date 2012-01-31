@@ -12,6 +12,7 @@ SOURCES += $(SOURCE_PATH)/eventmanager.c
 
 DRIVERS  = $(SOURCE_PATH)/drivers/PIT.c $(SOURCE_PATH)/drivers/VGA.c
 DRIVERS += $(SOURCE_PATH)/drivers/keyboard.c $(SOURCE_PATH)/drivers/term.c
+DRIVERS += $(SOURCE_PATH)/keyboard_layouts/us.c
 
 SOURCES_LIBS = $(SOURCE_LIBS)/fixedDict.c #$(SOURCE_LIBS)/dict.c
 #SOURCES_LIBS += $(SOURCE_LIBS)/ordered_array.c
@@ -29,7 +30,8 @@ else
 endif
 
 CFLAGS = $(CWARN) $(CDEBUGS) $(CINCS) \
-         -fno-builtin -nostdinc -nostdlib -m32
+         -fno-strict-aliasing \
+         -O2 -m32 -nostdinc -fno-builtin -nostdlib -fno-stack-protector
 
 
 .PHONY: all clean
