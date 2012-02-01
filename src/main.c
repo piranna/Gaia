@@ -49,7 +49,7 @@ void gaia_init(void)
 //    paging_init();
     syscall_init();
 
-//    interruptmanager_init();
+    interruptmanager_init();
 
     // Enable interruptions
     asm volatile("sti");

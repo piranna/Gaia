@@ -42,27 +42,6 @@ void irq_handler_unregister(u8int n)
 }
 
 
-void irq_isr_handler(registers_t* regs)
-{
-	// This line is important. When the processor extends the 8-bit interrupt number
-	// to a 32bit value, it sign-extends, not zero extends. So if the most significant
-	// bit (0x80) is set, regs.int_no will be very large (about 0xffffff80).
-    u8int int_no = regs->int_no & 0xFF;
-
-//if(regs.int_no!=13)
-//printf("isr_handler: [%d] %d -> %d\n", int_no, regs.ebx,regs.ecx);
-
-    isr_t handler = irq_entries[int_no];
-    if(handler)
-        handler(regs);
-
-    else
-    {
-        printf("unhandled interrupt: %d\n",int_no);
-//        for(;;);
-    }
-}
-
 // This gets called from our ASM interrupt handler stub.
 void irq_handler(registers_t regs)
 {
@@ -76,10 +55,7 @@ void irq_handler(registers_t regs)
    // Send reset signal to master. (As well as slave, if necessary).
    outb(0x20, 0x20);
 
-   irq_isr_handler(&regs);
-//   isr_t handler = irq_entries[regs.int_no];
-//   if(handler)
-//       handler(&regs);
+   isr_handler(regs);
 }
 
 
