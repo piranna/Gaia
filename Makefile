@@ -26,7 +26,7 @@ else
 endif
 CFLAGS = $(CWARN) $(CDEBUGS) $(CINCS) \
          -fno-strict-aliasing \
-         -O2 -m32 -nostdinc -fno-builtin -nostdlib -fno-stack-protector
+         -O2 -m32 -nostdinc -fno-builtin -nostdlib
 
 
 .PHONY: all clean run
