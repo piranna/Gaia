@@ -19,18 +19,24 @@ void set_eventmanager_send(t_em_send em_send)
 
 void interruptmanager_int_handler(registers_t* regs)
 {
-//    printf("interruptmanager_int_handler: %d\n",regs->int_no);
+    printf("interruptmanager_int_handler: %d\n",regs->int_no);
 }
 
 void interruptmanager_exc_handler(registers_t* regs)
 {
-//    printf("interruptmanager_exc_handler: %d\n",regs->int_no);
+    printf("interruptmanager_exc_handler: %d\n",regs->int_no);
 }
 
 
 void interruptmanager_init(void)
 {
-//	int i = 0;
-//	for(; i < 16; i++)
-//		irq_handler_register(i, &interruptmanager_exc_handler);
+	int i = 0;
+
+	// Exceptions
+	for(; i < 32; i++)
+		irq_handler_register(i, &interruptmanager_exc_handler);
+
+	// IRQs
+	for(; i < 48; i++)
+		irq_handler_register(i, &interruptmanager_int_handler);
 }
