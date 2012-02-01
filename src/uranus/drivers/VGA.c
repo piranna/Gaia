@@ -67,6 +67,9 @@ int VGA_text_putchar(int c)
 
 	switch(c)
 	{
+		case '\0':
+			return c;
+
 		// Backspace
 		case '\b':
 		{

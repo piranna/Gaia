@@ -28,7 +28,7 @@ void gaia_init(void)
 
     syscall_init();
 
-//    interruptmanager_init();
+    interruptmanager_init();
 
     // Enable interruptions
     asm volatile("sti");

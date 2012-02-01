@@ -37,6 +37,12 @@ void printf(const char* format, ...)
 			c = *format++;
 			switch(c)
 			{
+				// character
+				case 'c':
+					p = *arg++;
+					putchar(*p);
+					break;
+
 				// integer (decimal, unsigned or hexadecimal)
 				case 'd':
 				case 'u':
@@ -45,6 +51,7 @@ void printf(const char* format, ...)
 
 					goto printf_string;
 
+				// string
 				case 's':
 					p = *arg++;
 					if(!p)
@@ -55,6 +62,7 @@ void printf(const char* format, ...)
 							putchar(*p++);
 					break;
 
+				// No recognized specifier
 				default:
 					putchar('%');
 					putchar(c);
@@ -62,7 +70,7 @@ void printf(const char* format, ...)
 			}
 		}
 
-		// No scaped meta-character
+		// Normal character
 		else
 			putchar(c);
 	}
@@ -88,6 +96,12 @@ int snprintf(char* str, size_t size, const char* format,...)
 			c = *format++;
 			switch(c)
 			{
+				// character
+				case 'c':
+					p = *arg++;
+					putchar(*p);
+					break;
+
 				// integer (decimal, unsigned or hexadecimal)
 				case 'd':
 				case 'u':
@@ -111,7 +125,7 @@ int snprintf(char* str, size_t size, const char* format,...)
 						}
 					break;
 
-				// No scaped meta-character
+				// No recognized specifier
 				default:
 					*str = '%';
 					str++;
@@ -124,7 +138,7 @@ int snprintf(char* str, size_t size, const char* format,...)
 			}
 		}
 
-		// No special meta-character
+		// Normal character
 		else
 		{
 			*str = c;
