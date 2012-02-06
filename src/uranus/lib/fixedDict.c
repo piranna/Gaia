@@ -86,7 +86,7 @@ void fixedDict_set(fixedDict* dict, char* key, void* value)
 		else if(cmp > 0)
 		{
 			// Get capacity of the dict
-			unsigned int capacity = sizeof(*(dict->pairs))/sizeof(void*);
+			unsigned int capacity = sizeof(*(dict->pairs))/sizeof(pairKeyValue);
 
 			// Check if we have enought space to add the new entry
 			if(dict->length == capacity)
