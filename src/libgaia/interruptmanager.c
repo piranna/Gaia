@@ -21,6 +21,12 @@ void set_eventmanager_send(t_em_send em_send)
 	uranus_em_send = em_send;
 }
 
+t_em_pumpEvents uranus_em_pumpEvents = 0;
+void set_eventmanager_pumpEvents(t_em_pumpEvents em_pumpEvents)
+{
+	uranus_em_pumpEvents = em_pumpEvents;
+}
+
 
 void interruptmanager_int_handler(registers_t* regs)
 {
@@ -31,6 +37,9 @@ void interruptmanager_int_handler(registers_t* regs)
 
 		uranus_em_send(event, regs->err_code);
 	}
+
+	if(uranus_em_pumpEvents)
+		uranus_em_pumpEvents();
 }
 
 void interruptmanager_exc_handler(registers_t* regs)

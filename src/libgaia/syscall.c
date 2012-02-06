@@ -13,6 +13,7 @@ static void* syscalls[] =
 	&in,
     &out,
     &set_eventmanager_send,
+    &set_eventmanager_pumpEvents,
 };
 u32int num_syscalls = sizeof(syscalls)/sizeof(void*);
 
@@ -27,7 +28,7 @@ static void syscall_handler(registers_t* regs)
     // Get the required syscall location.
     void* location = syscalls[regs->eax];
 
-	printf("\tsyscall_handler %x %x %d\n", regs, &((*regs).eax), regs->eax);
+	printf("\t[1.1] syscall_handler %x %x %d\n", regs, &(regs->eax), regs->eax);
     // We don't know how many parameters the function wants, so we just push
 	// them all onto the stack in the correct order. The function will use all
 	// the parameters it wants, and we can pop them all back off afterwards.
@@ -47,10 +48,10 @@ static void syscall_handler(registers_t* regs)
       pop %%ebx; \
       pop %%ebx; \
     " : "=a" (ret)
-      : "r" (regs->edi), "r" (regs->esi), "r" (regs->edx), "r" (regs->ecx), "r" (regs->ebx),
-        "r" (location));
+      : "r" (regs->edi), "r" (regs->esi), "r" (regs->edx), "r" (regs->ecx),
+        "r" (regs->ebx), "r" (location));
     regs->eax = ret;
-	printf("\tsyscall_handler %x %x %d\n", regs, &((*regs).eax), regs->eax);
+	printf("\t[1.2] syscall_handler %x %x %d\n", regs, &(regs->eax), regs->eax);
 }
 
 extern void isr128(void);
