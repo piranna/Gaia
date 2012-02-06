@@ -16,5 +16,6 @@ void eventmanager_attach(char* event, event_func);
 void eventmanager_deattach(char* event);
 
 void eventmanager_send(char* event, int data);
+void eventmanager_pumpEvents(void);
 
 #endif /* EVENTMANAGER_H_ */

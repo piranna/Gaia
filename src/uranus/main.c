@@ -21,6 +21,7 @@ void init(void)
 	// Let the exokernel know where the event manager is
 	eventmanager_init();
 	syscall_set_eventmanager_send(eventmanager_send);
+	syscall_set_eventmanager_pumpEvents(eventmanager_pumpEvents);
 
 	// Drivers
     VGA_init();

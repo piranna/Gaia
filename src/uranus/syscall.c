@@ -18,3 +18,4 @@ int syscall_outb(const u16int port, const u8int value)
 }
 
 DEFN_SYSCALL1(set_eventmanager_send, 2, const t_em_send)
+DEFN_SYSCALL1(set_eventmanager_pumpEvents, 3, const t_em_pumpEvents)

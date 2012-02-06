@@ -19,8 +19,10 @@ int syscall_outb(const u16int port, const u8int value);
 
 /* hardcoded */
 typedef void (*t_em_send)(char*,int);
+typedef void (*t_em_pumpEvents)(void);
 /* hardcoded */
 
 DECL_SYSCALL1(set_eventmanager_send, const t_em_send)
+DECL_SYSCALL1(set_eventmanager_pumpEvents, const t_em_pumpEvents)
 
 #endif
