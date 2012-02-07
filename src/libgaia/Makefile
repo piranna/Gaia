@@ -21,7 +21,8 @@ OBJS = $(SOURCES:.c=.o) $(SOURCES_LIBS:.c=.o)
 
 CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement
 #CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Werror
-CINCS = -I$(SOURCE_PATH)/include -I$(SOURCE_PATH)/../include
+CINCS  = -I$(SOURCE_PATH)/include -I$(SOURCE_PATH)/../include
+CINCS += -I$(SOURCE_PATH)/../asm/include
 ifeq ($(DEBUG),true)
 	CDEBUGS += -g -D__DEBUG__=1
 else
