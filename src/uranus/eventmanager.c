@@ -11,11 +11,14 @@
 #include <string.h>
 
 #include "fixedDict.h"
+#include "fixedQueue.h"
 #include "syscall.h"
 
 
 static pairKeyValue eventmanager_events_pairs[10];
 static fixedDict eventmanager_events;
+
+static fixedQueue eventmanager_queue;
 
 
 void eventmanager_init(void)
@@ -37,13 +40,30 @@ void eventmanager_deattach(char* event)
 
 void eventmanager_send(char* event, int data)
 {
-	event_func func = fixedDict_get(&eventmanager_events, event);
-	if(func) func(data);
+	fixedQueue_append(&eventmanager_queue, );
+
+//	event_func func = fixedDict_get(&eventmanager_events, event);
+//	if(func) func(data);
 }
 
 
 void eventmanager_pumpEvents(void)
 {
-//	event_func func = fixedDict_get(&eventmanager_events, event);
-//	if(func) func(data);
+	// Don't start pumping if we are doing it yet
+	// TestAndSet() code found at
+	// http://comsci.liu.edu/~jrodriguez/testandset2.html
+	if(TestAndSet(&pumping)) return;
+
+	while(!fixedQueue_isEmpty(&eventmanager_queue))
+	{
+		pair = fixedQueue_head(&eventmanager_queue);
+
+	//	event_func func = fixedDict_get(&eventmanager_events, pair->event);
+	//	if(func) func(pair->data);
+
+		fixedQueue_pop(&eventmanager_queue);
+	}
+
+	// Say we finished to pump events
+	pumping = false;
 }
