@@ -15,4 +15,8 @@ typedef          char  s8int;
 
 typedef unsigned int size_t;
 
+typedef int bool;
+#define false 0
+#define true !false
+
 #endif // TYPES_H

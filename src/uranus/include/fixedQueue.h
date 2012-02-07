@@ -8,6 +8,8 @@
 #ifndef FIXEDQUEUE_H_
 #define FIXEDQUEUE_H_
 
+#include "types.h"
+
 typedef struct
 {
 	void* items;
@@ -19,6 +21,8 @@ typedef struct
 } fixedQueue;
 
 void fixedQueue_init(fixedQueue* queue, void* items, unsigned int itemSize);
+
+bool fixedQueue_isEmpty(fixedQueue* queue);
 
 void  fixedQueue_append(fixedQueue* queue, void* item);
 void* fixedQueue_head  (fixedQueue* queue);

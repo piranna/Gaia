@@ -19,6 +19,12 @@ void fixedQueue_init(fixedQueue* queue, void* items, unsigned int itemSize)
 }
 
 
+bool fixedQueue_isEmpty(fixedQueue* queue)
+{
+	return !queue->length;
+}
+
+
 void fixedQueue_append(fixedQueue* queue, void* item)
 {
 	if(queue->length < queue->capacity)
