@@ -35,6 +35,7 @@ void eventmanager_init(void)
 	fixedDict_init(&eventmanager_events, eventmanager_events_pairs);
 	fixedQueue_init(&eventmanager_queue, eventmanager_queue_items,
 					sizeof(pairEventData));
+	eventmanager_queue.capacity = 10;	// Hugly hack
 }
 
 
@@ -64,22 +65,28 @@ void eventmanager_send(char* event, int data)
 
 void eventmanager_pumpEvents(void)
 {
-//	static int pumping = 0;
-//
-//	// Don't start pumping if we are doing it yet
-//	if(TestAndSet(&pumping)) return;
-//
-//	// Pump events until there's no more
-//	while(!fixedQueue_isEmpty(&eventmanager_queue))
-//	{
-//		pairEventData* pair = fixedQueue_head(&eventmanager_queue);
-//
-//		event_func func = fixedDict_get(&eventmanager_events, pair->event);
-//		if(func) func(pair->data);
-//
-//		fixedQueue_pop(&eventmanager_queue);
-//	}
-//
-//	// Say we finished to pump events
-//	pumping = 0;
+	static int pumping = 0;
+
+	// Don't start pumping if we are doing it yet
+	if(TestAndSet(&pumping)) return;
+
+	// Pump events until there's no more
+	while(!fixedQueue_isEmpty(&eventmanager_queue))
+	{
+//		VGA_text_putchar('0'+eventmanager_queue.length);
+		pairEventData* pair = fixedQueue_head(&eventmanager_queue);
+
+		VGA_text_putchar(pair->event[0]);
+		event_func func = fixedDict_get(&eventmanager_events, pair->event);
+		if(func)
+		{
+//			VGA_text_putchar(pair->data);
+			func(pair->data);
+		}
+
+		fixedQueue_pop(&eventmanager_queue);
+	}
+
+	// Say we finished to pump events
+	pumping = 0;
 }
