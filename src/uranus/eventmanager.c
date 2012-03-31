@@ -73,16 +73,13 @@ void eventmanager_pumpEvents(void)
 	// Pump events until there's no more
 	while(!fixedQueue_isEmpty(&eventmanager_queue))
 	{
-//		VGA_text_putchar('0'+eventmanager_queue.length);
 		pairEventData* pair = fixedQueue_head(&eventmanager_queue);
 
-		VGA_text_putchar(pair->event[0]);
 		event_func func = fixedDict_get(&eventmanager_events, pair->event);
 		if(func)
-		{
-//			VGA_text_putchar(pair->data);
 			func(pair->data);
-		}
+//		else
+//			printf("\t\t\tUnknown event '%s'\n", pair->event);
 
 		fixedQueue_pop(&eventmanager_queue);
 	}

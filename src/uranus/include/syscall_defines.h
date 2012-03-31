@@ -32,7 +32,6 @@ int syscall_##fn(P1 p1, P2 p2) \
 { \
   int a; \
   asm volatile("int $0x80" : "=a" (a) : "0" (num), "b" ((int)p1), "c" ((int)p2)); \
-	printf("syscall_ %d\n", a);\
   return a; \
 }
 #define DEFN_SYSCALL3(fn, num, P1, P2, P3) \

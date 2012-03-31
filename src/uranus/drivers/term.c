@@ -14,11 +14,11 @@
 
 
 /* Handles the keyboard interrupt */
-static void keyboard_handler(int dumb)
+static void keyboard_handler(void)
 {
-	printf("keyboard_handler\n");
     /* Read from the keyboard's data buffer */
     unsigned char scancode = syscall_inb(0x60);
+//	printf("keyboard_handler %d\n", scancode);
 
     /* If the top bit of the byte we read from the keyboard is
     *  set, that means that a key has just been released */
@@ -71,7 +71,7 @@ static void term_handler_press(unsigned char scancode)
 	}
 
 	char c = kbd[scancode];
-	printf("term_handler_press: %u %c\n", scancode, c);
+//	printf("term_handler_press: %u %c\n", scancode, c);
 
 	eventmanager_send("term/press/character", c);
 
