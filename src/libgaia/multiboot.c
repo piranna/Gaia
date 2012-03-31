@@ -117,4 +117,12 @@ void multiboot_print_info(unsigned long magic, unsigned long addr)
                    mmap->len & 0xffffffff,
                    (unsigned)mmap->type);
     }
+
+    /* Is there video information? */
+    if(CHECK_FLAG(mbi->flags, MULTIBOOT_INFO_VIDEO_INFO))
+    {
+    	printf("vbe_control_info = 0x%x, vbe_mode_info = 0x%x\n",
+    			mbi->vbe_control_info, mbi->vbe_mode_info);
+    	printf("vbe_mode = 0x%x\n", mbi->vbe_mode);
+    }
 }
