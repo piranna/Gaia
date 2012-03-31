@@ -12,6 +12,9 @@
 
 #include "syscall_userspace.h"
 
+/* hardcoded */
+#define IRQ0  32	// PIT
+/* hardcoded */
 
 u32int tick = 0;
 

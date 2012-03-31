@@ -6,7 +6,6 @@
 #ifndef SYSCALL_H_USERSPACE
 #define SYSCALL_H_USERSPACE
 
-#include "syscall.h"
 #include "syscall_defines.h"
 #include "types.h"
 
@@ -16,10 +15,25 @@ DECL_SYSCALL3(out, const u8int, const u16int, const u8int)
 int syscall_inb(const u16int port);
 int syscall_outb(const u16int port, const u8int value);
 
-#include "irq.h"
+/* hardcoded */
+typedef struct registers
+{
+    u32int ds;                  // Data segment selector
+    u32int edi, esi, ebp, esp, ebx, edx, ecx, eax; // Pushed by pusha.
+    u32int int_no, err_code;    // Interrupt number and error code (if applicable)
+    u32int eip, cs, eflags, useresp, ss; // Pushed by the processor automatically.
+} registers_t;
+typedef void (*isr_t)(registers_t*);
+/* hardcoded */
+
 DECL_SYSCALL2(irq_register_handler, const u8int, const isr_t)
 
 #include "eventmanager.h"
+
+/* hardcoded */
+typedef void (*t_em_send)(char*,int);
+/* hardcoded */
+
 DECL_SYSCALL1(set_eventmanager_send, const t_em_send)
 
 #endif
