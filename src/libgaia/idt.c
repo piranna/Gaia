@@ -20,6 +20,26 @@ extern void idt_flush(u32int);
 idt_entry_t idt_entries[256];
 idt_ptr_t   idt_ptr;
 
+extern isr_t irq_entries[256];
+
+
+#include <stdio.h>
+void _idt_handler(registers_t* regs)
+{
+	int aux = regs->int_no;
+	if(aux == 0x80)
+		printf("_idt_handler %x %x %d\n", regs, &((*regs).eax), regs->eax);
+
+	isr_t handler = irq_entries[regs->int_no];
+    if(handler)
+        handler(regs);
+    else
+        printf("unhandled interrupt: %d\n", regs->int_no);
+
+	if(aux == 0x80)
+		printf("_idt_handler %x %x %d\n", regs, &((*regs).eax), regs->eax);
+}
+
 
 void idt_init(void)
 {
