@@ -12,7 +12,7 @@
 
 // Lets us access our ASM functions from our C code.
 extern void gdt_flush(u32int);
-extern void tss_flush();
+extern void tss_flush(void);
 
 // Internal function prototypes.
 static void gdt_set_gate(s32int,u32int,u32int,u8int,u8int);
