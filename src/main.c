@@ -11,6 +11,7 @@
 
 #include "gdt.h"
 #include "idt.h"
+//#include "paging.h"
 
 #include "drivers/PIT.h"
 
@@ -124,12 +125,37 @@ void Multiboot_PrintInfo(unsigned long magic, unsigned long addr)
 }
 
 
+/*void switch_to_user_mode(void)
+{
+	// Set up a stack structure for switching to user mode.
+	asm volatile("\
+		cli;\
+		mov $0x23, %ax;\
+		mov %ax, %ds;\
+		mov %ax, %es;\
+		mov %ax, %fs;\
+		mov %ax, %gs;\
+		\
+		mov %esp, %eax;\
+		pushl $0x23;\
+		pushl %eax;\
+		pushf;\
+		pushl $0x1B;\
+		push $1f;\
+		iret;\
+		1:\
+		");
+}*/
+
+
 // Initialisation routine - zeroes all the interrupt service routines,
 // initialises the GDT and IDT.
 void init(void)
 {
     gdt_init();		// Initialise the global descriptor table.
     idt_init();		// Initialise the interrupt descriptor table.
+
+//    paging_init();
 
     // Enable interruptions
     asm volatile("sti");
@@ -140,14 +166,18 @@ void init(void)
 
 void cmain(unsigned long magic, unsigned long addr)
 {
-    // Initialise all the ISRs and segmentation
-    init();
+	/* Clear the screen. */
+	cls();
 
-    /* Clear the screen. */
-    cls();
+	// Show multiboot info
+	Multiboot_PrintInfo(magic, addr);
 
-    Multiboot_PrintInfo(magic, addr);
+	// Initialise all the ISRs and segmentation
+	init();
 
     asm volatile("int $0x3");
     asm volatile("int $0x4");
+
+////    switch_to_user_mode();
+////    printf("Hello, user world!\n");
 }

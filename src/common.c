@@ -3,6 +3,9 @@
 
 #include "common.h"
 
+#include <stdio.h>
+
+
 // Write a byte out to the specified port.
 void outb(u16int port, u8int value)
 {
@@ -32,7 +35,7 @@ u16int inw(u16int port)
 //}
 
 // Write len copies of val into dest.
-void memset(u8int *dest, u8int val, u32int len)
+void memset(u8int* dest, u8int val, u32int len)
 {
     u8int *temp = (u8int *)dest;
     for ( ; len != 0; len--) *temp++ = val;
@@ -87,3 +90,23 @@ void memset(u8int *dest, u8int val, u32int len)
 //    while (*src != 0);
 //    return dest;
 //}
+
+extern void panic(const char *message, const char *file, u32int line)
+{
+    // We encountered a massive problem and have to stop.
+    asm volatile("cli"); // Disable interrupts.
+
+    printf("PANIC(%s) at %s:%d\n",message,file,line);
+    // Halt by going into an infinite loop.
+    for(;;);
+}
+
+extern void panic_assert(const char *file, u32int line, const char *desc)
+{
+    // An assertion failed, and we have to panic.
+    asm volatile("cli"); // Disable interrupts.
+
+    printf("ASSERTION-FAILED(%s) at %s:%d\n", desc,file,line);
+    // Halt by going into an infinite loop.
+    for(;;);
+}

@@ -1,5 +1,9 @@
-http://pdos.csail.mit.edu/papers/exo:chen-meng.pdf
-http://www.docstoc.com/docs/19697222/The-Exokernel-Operating-System-Architecture
+Exokernel
+    http://pdos.csail.mit.edu/papers/exo:chen-meng.pdf
+    http://www.docstoc.com/docs/19697222/The-Exokernel-Operating-System-Architecture
+
+Roll your own toy UNIX-clone OS
+    http://www.jamesmolloy.co.uk/tutorial_html
 
 Hardware text mode cursor
     http://www.osdever.net/FreeVGA/vga/textcur.htm
