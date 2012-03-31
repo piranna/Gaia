@@ -11,6 +11,6 @@
 /* Convert the integer D to a string and save the string in BUF. If
 	BASE is equal to 'd', interpret that D is decimal, and if BASE is
 	equal to 'x', interpret that D is hexadecimal. */
-void itoa(char* buf, int base, int d);
+char* itoa(int value, char* str, int base);
 
 #endif /* STDLIB_H_ */

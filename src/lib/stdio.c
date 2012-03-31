@@ -95,7 +95,7 @@ void printf(const char* format, ...)
 				case 'd':
 				case 'u':
 				case 'x':
-					itoa(buf, c, *((int*) arg++));
+					itoa(*((int*)arg++), buf, c);
 					p = buf;
 					goto string;
 					break;
@@ -147,7 +147,7 @@ int snprintf(char* str, int size, const char* format,...)
 				case 'd':
 				case 'u':
 				case 'x':
-					itoa(buf, c, *((int*) arg++));
+					itoa(*((int*)arg++), buf, c);
 					p = buf;
 					goto string;
 					break;
