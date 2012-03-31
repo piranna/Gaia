@@ -6,7 +6,7 @@
 
 
 extern t_em_send uranus_em_send;
-int putchar(int c)
+static int putchar(int c)
 {
 	if(uranus_em_send)
 		uranus_em_send("putchar", c);
@@ -65,61 +65,61 @@ void printf(const char* format, ...)
 }
 
 
-int snprintf(char* str, int size, const char* format,...)
-{
-	char** arg = (char**)&format;
-	int c;
-	char buf[20];
-
-	int s = size;
-
-	arg++;
-
-	while((c = *format++) != 0 && size)
-	{
-		if(c != '%')
-		{
-			*str = c;
-			str++;
-			size--;
-		}
-		else
-		{
-			char* p;
-
-			c = *format++;
-			switch(c)
-			{
-				case 'd':
-				case 'u':
-				case 'x':
-					itoa(*((int*)arg++), buf, c);
-					p = buf;
-					goto string;
-					break;
-
-				case 's':
-					p = *arg++;
-					if(!p)
-						p = "(null)";
-
-					string:
-						while(*p && size)
-						{
-							*str = c;
-							str++;
-							size--;
-						}
-					break;
-
-				default:
-					*str = *((int*)arg++);
-					str++;
-					size--;
-					break;
-			}
-		}
-	}
-
-	return s - size;
-}
+//int snprintf(char* str, int size, const char* format,...)
+//{
+//	char** arg = (char**)&format;
+//	int c;
+//	char buf[20];
+//
+//	int s = size;
+//
+//	arg++;
+//
+//	while((c = *format++) != 0 && size)
+//	{
+//		if(c != '%')
+//		{
+//			*str = c;
+//			str++;
+//			size--;
+//		}
+//		else
+//		{
+//			char* p;
+//
+//			c = *format++;
+//			switch(c)
+//			{
+//				case 'd':
+//				case 'u':
+//				case 'x':
+//					itoa(*((int*)arg++), buf, c);
+//					p = buf;
+//					goto string;
+//					break;
+//
+//				case 's':
+//					p = *arg++;
+//					if(!p)
+//						p = "(null)";
+//
+//					string:
+//						while(*p && size)
+//						{
+//							*str = c;
+//							str++;
+//							size--;
+//						}
+//					break;
+//
+//				default:
+//					*str = *((int*)arg++);
+//					str++;
+//					size--;
+//					break;
+//			}
+//		}
+//	}
+//
+//	return s - size;
+//}

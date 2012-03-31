@@ -8,8 +8,6 @@
 // timer.c -- Initialises the PIT, and handles clock updates.
 // Written for JamesM's kernel development tutorials.
 
-#include "PIT.h"
-
 #include <stdio.h>
 
 #include "syscall_userspace.h"
@@ -34,7 +32,6 @@ void PIT_init(u32int frequency)
    u32int divisor = 1193180 / frequency;
 
    // Firstly, register our timer callback.
-   printf("PIT_init: %d -> %d\n", IRQ0,&PIT_handler);
    syscall_irq_register_handler(IRQ0, &PIT_handler);
 
    // Send the command byte.
