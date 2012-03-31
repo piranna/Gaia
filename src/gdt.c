@@ -5,8 +5,11 @@
 //                       Rewritten for JamesM's kernel development tutorials.
 //
 
-#include "common.h"
 #include "gdt.h"
+
+#include <string.h>
+
+#include "common.h"
 #include "tss.h"
 
 
