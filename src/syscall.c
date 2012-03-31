@@ -8,18 +8,43 @@
 static void syscall_handler(registers_t* regs);
 
 
+int in(const u8int bytepower, const u16int port)
+{
+	switch(bytepower)
+	{
+		case 0:	return inb(port);
+		case 1:	return inw(port);
+	}
+
+	// We should raise some kind of exception to userspace...
+	return 0;
+}
+
+void out(const u8int bytepower, const u16int port, const u8int value)
+{
+	switch(bytepower)
+	{
+		case 0:	return outb(port, value);
+		case 1:	return outw(port, value);
+	}
+
+	// We should raise some kind of exception to userspace...
+}
+
+
 static void* syscalls[] =
 {
-	&inb,
-    &outb,
+	&in,
+    &out,
+    &irq_handler_register,
 };
-u32int num_syscalls = 2;
+u32int num_syscalls = 3;
 
 
 void syscall_init(void)
 {
     // Register our syscall handler.
-    irq_register_handler(0x80, &syscall_handler);
+    irq_handler_register(0x80, &syscall_handler);
 }
 
 void syscall_handler(registers_t* regs)
@@ -51,6 +76,7 @@ void syscall_handler(registers_t* regs)
       pop %%ebx; \
       pop %%ebx; \
     " : "=a" (ret)
-      : "r" (regs->edi), "r" (regs->esi), "r" (regs->edx), "r" (regs->ecx), "r" (regs->ebx), "r" (location));
+      : "r" (regs->edi), "r" (regs->esi), "r" (regs->edx), "r" (regs->ecx), "r" (regs->ebx),
+        "r" (location));
     regs->eax = ret;
 }
