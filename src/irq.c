@@ -27,17 +27,17 @@ extern void irq14(void);
 extern void irq15(void);
 
 
-isr_t interrupt_handlers[256];
+isr_t irq_entries[256];
 
 
 void irq_handler_register(u8int n, isr_t handler)
 {
-  interrupt_handlers[n] = handler;
+	irq_entries[n] = handler;
 }
 
 void irq_handler_unregister(u8int n)
 {
-  interrupt_handlers[n] = 0;
+	irq_entries[n] = 0;
 }
 
 
@@ -46,7 +46,7 @@ void irq_handler(registers_t regs)
 {
    // Send an EOI (end of interrupt) signal to the PICs.
    // If this interrupt involved the slave.
-   if (regs.int_no >= 40)
+   if(regs.int_no >= 40)
    {
        // Send reset signal to slave.
        outb(0xA0, 0x20);
@@ -54,9 +54,9 @@ void irq_handler(registers_t regs)
    // Send reset signal to master. (As well as slave, if necessary).
    outb(0x20, 0x20);
 
-   if (interrupt_handlers[regs.int_no] != 0)
+   if(irq_entries[regs.int_no])
    {
-       isr_t handler = interrupt_handlers[regs.int_no];
+       isr_t handler = irq_entries[regs.int_no];
        handler(&regs);
    }
 }
