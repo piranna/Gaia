@@ -1,4 +1,4 @@
-#include <video.h>
+#include "video.h"
 
 
 /* Some screen stuff. */
@@ -17,7 +17,7 @@ int ypos;	/* Save the Y position. */
 static volatile unsigned char* video = (unsigned char*)VIDEO;
 
 
-void linefeed(void)
+void video_linefeed(void)
 {
 	int i = 0;
 
@@ -29,3 +29,35 @@ void linefeed(void)
 	for(; i < COLUMNS * LINES * 2; i++)
 		*(video + i) = 0;
 }
+
+
+/* Put the character C on the screen and return the written character,
+ * just like the libc function printf. */
+int video_putchar(int c)
+{
+	switch(c)
+	{
+		newline:
+
+		case '\n':
+			ypos++;
+			if(ypos >= LINES)
+			{
+				video_linefeed();
+				ypos = LINES-1;
+			}
+
+		case '\r':
+			xpos = 0;
+			return c;
+	}
+
+	*(video + (xpos + ypos * COLUMNS) * 2) = c & 0xFF;
+	*(video + (xpos + ypos * COLUMNS) * 2 + 1) = ATTRIBUTE;
+
+	xpos++;
+	if(xpos >= COLUMNS)
+		goto newline;
+
+	return c;
+ }

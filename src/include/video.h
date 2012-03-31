@@ -8,6 +8,7 @@
 #ifndef VIDEO_H_
 #define VIDEO_H_
 
-void linefeed(void);
+void video_linefeed(void);
+int video_putchar(int c);
 
 #endif /* VIDEO_H_ */
