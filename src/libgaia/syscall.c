@@ -12,7 +12,6 @@ static void* syscalls[] =
 {
 	&in,
     &out,
-    &irq_handler_register,
     &set_eventmanager_send,
 };
 u32int num_syscalls = sizeof(syscalls)/sizeof(void*);
