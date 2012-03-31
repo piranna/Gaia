@@ -9,3 +9,6 @@ Roll your own toy UNIX-clone OS
 Hardware text mode cursor
     http://www.osdever.net/FreeVGA/vga/textcur.htm
     http://wiki.osdev.org/Text_Mode_Cursor
+
+RDOS
+    http://www.rdos.net/rdos
