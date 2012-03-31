@@ -55,11 +55,27 @@ int VGA_text_putchar(int c)
 {
 	switch(c)
 	{
-		case '\t':
-			xpos = (xpos+TAB_WIDTH) & ~(TAB_WIDTH-1);
-			if(xpos >= COLUMNS)
-				goto newline;
+		case '\b':
+			xpos--;
+			if(xpos < 0)
+			{
+				xpos = COLUMNS - 1;
+				ypos--;
+				if(ypos < 0)
+					ypos = 0;
+			}
+
+			*(video + (xpos + ypos * COLUMNS) * 2) = ' ' & 0xFF;
+			*(video + (xpos + ypos * COLUMNS) * 2 + 1) = ATTRIBUTE;
+
 			return c;
+
+		case '\t':
+			xpos += TAB_WIDTH;
+			xpos &=  ~(TAB_WIDTH-1);
+
+			if(xpos < COLUMNS)
+				return c;
 
 		newline:
 
