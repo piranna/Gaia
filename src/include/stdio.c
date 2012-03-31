@@ -74,7 +74,7 @@ itoa(char *buf, int base, int d)
 }
 
 
-static void linefeed()
+static void linefeed(void)
 {
 	int i;
 

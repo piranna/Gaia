@@ -4,8 +4,10 @@ DEBUG = true
 TARGET = gaia
 SOURCE_PATH = src
 SOURCES = $(SOURCE_PATH)/main.c
+SOURCES += $(SOURCE_PATH)/descriptor_tables.c $(SOURCE_PATH)/isr.c $(SOURCE_PATH)/common.c
 SOURCES += $(SOURCE_PATH)/include/stdio.c
 OBJS = $(SOURCES:.c=.o) $(SOURCE_PATH)/multiboot/boot.o
+OBJS += $(SOURCE_PATH)/gdt.o $(SOURCE_PATH)/interrupt.o
 
 CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement
 #CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Werror
@@ -18,6 +20,8 @@ endif
 CFLAGS = $(CWARN) $(CDEBUGS) $(CINCS) \
          -fno-strict-aliasing \
          -m32 -nostdinc -fno-builtin -nostdlib -fno-stack-protector
+
+ASFLAGS=-felf
 
 
 .PHONY: all clean run
@@ -38,3 +42,11 @@ $(TARGET).out : $(OBJS)
 
 $(SOURCE_PATH)/multiboot/boot.o:
 	$(CC) -o $@ -c $(SOURCE_PATH)/multiboot/boot.S -m32 -nostdinc -nostdlib -fno-builtin
+
+$(SOURCE_PATH)/gdt.o:
+#	$(CC) -o $@ -c $(SOURCE_PATH)/gdt.s -m32 -nostdinc -nostdlib -fno-builtin
+	nasm $(ASFLAGS) $(SOURCE_PATH)/gdt.s
+
+$(SOURCE_PATH)/interrupt.o:
+#	$(CC) -o $@ -c $(SOURCE_PATH)/interrupt.s -m32 -nostdinc -nostdlib -fno-builtin
+	nasm $(ASFLAGS) $(SOURCE_PATH)/interrupt.s
