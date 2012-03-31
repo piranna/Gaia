@@ -63,7 +63,7 @@ void isr_handler(registers_t regs)
     else
     {
         printf("unhandled interrupt: %d\n",int_no);
-        for(;;);
+//        for(;;);
     }
 }
 
