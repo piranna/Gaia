@@ -13,6 +13,7 @@
 
 #include "drivers/PIT.h"
 #include "drivers/VGA.h"
+#include "drivers/keyboard.h"
 
 void init(void)
 {
@@ -22,6 +23,7 @@ void init(void)
 	// Drivers
     PIT_init(100);	// Initialise the PIT to 100Hz
     VGA_init();
+    keyboard_init();
 }
 
 void main(void)

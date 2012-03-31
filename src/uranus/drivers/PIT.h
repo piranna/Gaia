@@ -1,12 +1,12 @@
 /*
- * timer.h
+ * PIT.h
  *
  *  Created on: 05/12/2011
  *      Author: piranna
  */
 
-// timer.h -- Defines the interface for all PIT-related functions.
-// Written for JamesM's kernel development tutorials.
+// PIT.h -- Defines the interface for all PIT-related functions.
+// Based on code for JamesM's kernel development tutorials.
 
 #ifndef PIT_H_
 #define PIT_H_

@@ -9,12 +9,14 @@ SOURCE_LIBS = ./lib
 SOURCES  = $(SOURCE_PATH)/main.c
 SOURCES += $(SOURCE_PATH)/syscall_userspace.c
 SOURCES += $(SOURCE_PATH)/eventmanager.c
-SOURCES += $(SOURCE_PATH)/drivers/PIT.c $(SOURCE_PATH)/drivers/VGA.c
+
+DRIVERS  = $(SOURCE_PATH)/drivers/PIT.c $(SOURCE_PATH)/drivers/VGA.c
+DRIVERS += $(SOURCE_PATH)/drivers/keyboard.c
 
 SOURCES_LIBS  = $(SOURCE_LIBS)/string.c $(SOURCE_LIBS)/fixedDict.c
 #SOURCES_LIBS += $(SOURCE_LIBS)/ordered_array.c
 
-OBJS = $(SOURCES:.c=.o) $(SOURCES_LIBS:.c=.o)
+OBJS = $(SOURCES:.c=.o) $(DRIVERS:.c=.o) $(SOURCES_LIBS:.c=.o)
 
 CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement
 #CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Werror
