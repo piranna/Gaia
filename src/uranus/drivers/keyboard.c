@@ -5,7 +5,7 @@
  * Notes: No warranty expressed or implied. Use at own risk.
  */
 
-#include "syscall_userspace.h"
+#include "syscall.h"
 
 /* hardcoded */
 #define IRQ1  33	// keyboard

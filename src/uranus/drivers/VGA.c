@@ -5,7 +5,7 @@
  *      Author: piranna
  */
 
-#include "syscall_userspace.h"
+#include "syscall.h"
 
 
 /* Some screen stuff. */

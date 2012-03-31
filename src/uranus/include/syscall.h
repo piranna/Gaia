@@ -3,8 +3,8 @@
  * Piranna, 2011-12-17
  */
 
-#ifndef SYSCALL_H_USERSPACE
-#define SYSCALL_H_USERSPACE
+#ifndef SYSCALL_H
+#define SYSCALL_H
 
 #include "syscall_defines.h"
 #include "types.h"
