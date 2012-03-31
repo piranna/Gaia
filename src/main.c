@@ -12,8 +12,7 @@
 #include "gdt.h"
 #include "idt.h"
 #include "paging.h"
-
-#include "drivers/PIT.h"
+#include "syscall.h"
 
 
 /* Check if the bit BIT in FLAGS is set. */
@@ -160,10 +159,9 @@ void init(void)
 
     // Enable interruptions
     asm volatile("sti");
-
-    // Drivers
-    PIT_init(100);	// Initialise the PIT to 100Hz
 }
+
+void kmain(void);
 
 void cmain(unsigned long magic, unsigned long addr)
 {
@@ -176,9 +174,9 @@ void cmain(unsigned long magic, unsigned long addr)
 	// Initialise all the ISRs and segmentation
 	init();
 
-    asm volatile("int $0x3");
-    asm volatile("int $0x4");
-
 //    switch_to_user_mode();
 //    printf("Hello, user world!\n");
+
+	// Start the userspace kernel
+	kmain();
 }
