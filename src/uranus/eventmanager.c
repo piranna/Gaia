@@ -26,8 +26,9 @@ static void eventmanager_irq_handler(registers_t* regs)
 {
 	char event[7];
 	snprintf(event, sizeof(event)-1, "IRQ/%d", regs->int_no - IRQ0);
+//	printf("eventmanager_irq_handler\n");
 
-//	eventmanager_send(event, regs->err_code);
+	eventmanager_send(event, regs->err_code);
 }
 
 
@@ -35,7 +36,7 @@ void eventmanager_init(void)
 {
 	fixedDict_init(&eventmanager_events, eventmanager_events_pairs);
 
-	syscall_irq_handler_register(IRQ0, &eventmanager_irq_handler);
+//	syscall_irq_handler_register(IRQ0, &eventmanager_irq_handler);
 	syscall_irq_handler_register(IRQ1, &eventmanager_irq_handler);
 }
 
