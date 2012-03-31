@@ -55,7 +55,9 @@ ISR_NOERRCODE 28
 ISR_NOERRCODE 29
 ISR_NOERRCODE 30
 ISR_NOERRCODE 31
- 
+
+ISR_NOERRCODE 128   ; Syscalls
+
 ; In isr.c
 extern isr_handler
 

@@ -56,14 +56,14 @@ void main(void);
 
 void gaia_main(unsigned long magic, unsigned long addr)
 {
-	// Initialise all the ISRs and segmentation
-	gaia_init();
-
 	/* Clear the screen. */
 	cls();
 
 	// Show multiboot info
 	multiboot_print_info(magic, addr);
+
+	// Initialise all the ISRs and segmentation
+	gaia_init();
 
 //    switch_to_user_mode();
 //    printf("Hello, user world!\n");

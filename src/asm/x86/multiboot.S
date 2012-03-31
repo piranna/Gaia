@@ -79,9 +79,10 @@ multiboot_entry:
     pushl   $halt_message
     call    EXT_C(printf)
 
-loop:
-    hlt
-    jmp     loop
+halt:
+    cli             // Disable interruptions
+    hlt             // Halt CPU
+    jmp     halt    // Repeat if for whatever reason CPU is still working
 
 halt_message:
     .asciz  "Halted."
