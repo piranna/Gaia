@@ -51,9 +51,17 @@ void* fixedDict_get(fixedDict* dict, char* key)
 	// Look for the element
 	int i = 0;
 	for(; i < dict->length; ++i)
+	{
+		int cmp = strcmp(dict->pairs[i].key, key);
+
 		// We have found the dict entry, return it
-		if(!strcmp(dict->pairs[i].key, key))
+		if(cmp == 0)
 			return dict->pairs[i].value;
+
+		// We found a dict entry greater than the one we wanted, exit loop
+		else if(cmp > 0)
+			break;
+	}
 
 	// Dict entry was not on the dict, return nothing
 	return 0;
@@ -78,7 +86,7 @@ void fixedDict_set(fixedDict* dict, char* key, void* value)
 		else if(cmp > 0)
 		{
 			// Get capacity of the dict
-			unsigned int capacity = sizeof(dict)/sizeof(void*);
+			unsigned int capacity = sizeof(*(dict->pairs))/sizeof(void*);
 
 			// Check if we have enought space to add the new entry
 			if(dict->length == capacity)
@@ -89,6 +97,8 @@ void fixedDict_set(fixedDict* dict, char* key, void* value)
 			int j = dict->length;
 			for(; j > i; --j)
 				dict->pairs[j] = dict->pairs[j-1];
+
+			break;
 		}
 	}
 
