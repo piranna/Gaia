@@ -5,6 +5,8 @@
  *      Author: piranna
  */
 
+#include <string.h>
+
 
 // Compare two strings. Should return -1 if
 // str1 < str2, 0 if they are equal or 1 otherwise.
@@ -81,3 +83,12 @@ int strcmp(const char* str1, const char* str2)
 //    }
 //    while (*src != 0);
 //}
+
+// Copy the NULL-terminated string src into dest up to num, and return dest.
+char* strncpy(char* dest, const char* src, size_t num)
+{
+    for(; num; --num)
+    	*dest++ = *src ? *src++ : '\0';
+
+    return dest;
+}
