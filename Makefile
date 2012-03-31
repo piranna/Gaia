@@ -3,15 +3,21 @@ DEBUG = true
 
 TARGET = gaia
 SOURCE_PATH = src
-SOURCES = $(SOURCE_PATH)/main.c
-SOURCES += $(SOURCE_PATH)/descriptor_tables.c $(SOURCE_PATH)/isr.c $(SOURCE_PATH)/common.c
-SOURCES += $(SOURCE_PATH)/include/stdio.c
-OBJS = $(SOURCES:.c=.o) $(SOURCE_PATH)/multiboot/boot.o
-OBJS += $(SOURCE_PATH)/gdt.o $(SOURCE_PATH)/interrupt.o
+SOURCE_LIBS = src/lib
+SOURCE_ASM_PATH = src/asm/x86
+
+SOURCES      = $(SOURCE_PATH)/main.c
+SOURCES     += $(SOURCE_PATH)/descriptor_tables.c $(SOURCE_PATH)/isr.c
+SOURCES     += $(SOURCE_PATH)/common.c
+SOURCES_LIBS = $(SOURCE_LIBS)/stdio.c
+
+OBJS_ASM  = $(SOURCE_ASM_PATH)/multiboot.o
+OBJS_ASM += $(SOURCE_ASM_PATH)/gdt.o $(SOURCE_ASM_PATH)/interrupt.o
+OBJS      = $(SOURCES:.c=.o) $(SOURCES_LIBS:.c=.o) $(OBJS_ASM)
 
 CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement
 #CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Werror
-CINCS = -I$(SOURCE_PATH) -I$(SOURCE_PATH)/include -I$(SOURCE_PATH)/multiboot
+CINCS = -I$(SOURCE_PATH) -I$(SOURCE_PATH)/include
 ifeq ($(DEBUG),true)
 	CDEBUGS += -g -D__DEBUG__=1
 else
@@ -40,13 +46,14 @@ $(TARGET).out : $(OBJS)
 	$(CC) -o $@ $(OBJS) -m32 -nostdinc -nostdlib -fno-builtin
 #	$(LD) -o $@ $(OBJS) -Ttext 0x100000 -melf_i386
 
-$(SOURCE_PATH)/multiboot/boot.o:
-	$(CC) -o $@ -c $(SOURCE_PATH)/multiboot/boot.S -m32 -nostdinc -nostdlib -fno-builtin
+$(SOURCE_ASM_PATH)/multiboot.o:
+	$(CC) -o $@ -c $(SOURCE_ASM_PATH)/multiboot.S $(CFLAGS)
+#	$(CC) -o $@ -c $(SOURCE_ASM_PATH)/multiboot.S -m32 -nostdinc -nostdlib -fno-builtin
 
-$(SOURCE_PATH)/gdt.o:
-#	$(CC) -o $@ -c $(SOURCE_PATH)/gdt.s -m32 -nostdinc -nostdlib -fno-builtin
-	nasm $(ASFLAGS) $(SOURCE_PATH)/gdt.s
+$(SOURCE_ASM_PATH)/gdt.o:
+#	$(CC) -o $@ -c $(SOURCE_ASM_PATH)/gdt.s -m32 -nostdinc -nostdlib -fno-builtin
+	nasm $(ASFLAGS) $(SOURCE_ASM_PATH)/gdt.s
 
-$(SOURCE_PATH)/interrupt.o:
-#	$(CC) -o $@ -c $(SOURCE_PATH)/interrupt.s -m32 -nostdinc -nostdlib -fno-builtin
-	nasm $(ASFLAGS) $(SOURCE_PATH)/interrupt.s
+$(SOURCE_ASM_PATH)/interrupt.o:
+#	$(CC) -o $@ -c $(SOURCE_ASM_PATH)/interrupt.s -m32 -nostdinc -nostdlib -fno-builtin
+	nasm $(ASFLAGS) $(SOURCE_ASM_PATH)/interrupt.s
