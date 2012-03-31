@@ -42,6 +42,7 @@ static void term_handler_press(unsigned char scancode)
 	}
 
 	char c = kbd[scancode];
+	printf("term_handler_press: %u %c\n", scancode, c);
 
 	eventmanager_send("term/press/character", c);
 
@@ -73,6 +74,6 @@ static void term_handler_release(unsigned char scancode)
 
 void term_init(void)
 {
-	eventmanager_attach("keyboard/press/character",   &term_handler_press);
-	eventmanager_attach("keyboard/release/character", &term_handler_release);
+	eventmanager_attach("keyboard/press/scancode",   &term_handler_press);
+	eventmanager_attach("keyboard/release/scancode", &term_handler_release);
 }
