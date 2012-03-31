@@ -9,7 +9,8 @@
 #include "multiboot.h"
 #include <stdio.h>
 
-#include "descriptor_tables.h"
+#include "gdt.h"
+#include "idt.h"
 
 
 /* Check if the bit BIT in FLAGS is set. */
@@ -121,10 +122,21 @@ void Multiboot_PrintInfo(unsigned long magic, unsigned long addr)
 }
 
 
+// Initialisation routine - zeroes all the interrupt service routines,
+// initialises the GDT and IDT.
+void init(void)
+{
+    // Initialise the global descriptor table.
+    gdt_init();
+
+    // Initialise the interrupt descriptor table.
+    idt_init();
+}
+
 void cmain(unsigned long magic, unsigned long addr)
 {
     // Initialise all the ISRs and segmentation
-    init_descriptor_tables();
+    init();
 
     /* Clear the screen. */
     cls();

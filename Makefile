@@ -7,7 +7,7 @@ SOURCE_LIBS = src/lib
 SOURCE_ASM_PATH = src/asm/x86
 
 SOURCES      = $(SOURCE_PATH)/main.c
-SOURCES     += $(SOURCE_PATH)/descriptor_tables.c $(SOURCE_PATH)/isr.c
+SOURCES     += $(SOURCE_PATH)/gdt.c $(SOURCE_PATH)/idt.c $(SOURCE_PATH)/isr.c
 SOURCES     += $(SOURCE_PATH)/common.c
 SOURCES_LIBS = $(SOURCE_LIBS)/stdio.c
 
