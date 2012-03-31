@@ -50,7 +50,7 @@ static void syscall_handler(registers_t* regs)
       : "r" (regs->edi), "r" (regs->esi), "r" (regs->edx), "r" (regs->ecx),
         "r" (regs->ebx), "r" (location));
 
-    printf("syscall_handler %x %x\t%x %d\n", &regs, regs, &(regs->eax), regs->eax);
+    printf("syscall %x %x\t%x %d\n", &regs, regs, &(regs->eax), regs->eax);
 
     regs->eax = ret;
 }
