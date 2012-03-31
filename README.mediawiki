@@ -1,0 +1,14 @@
+= Gaia =
+Gaia is an exokernel/framework designed based on [http://www.gnu.org/software/grub/manual/multiboot/multiboot.html Multiboot Specification] and with the intention to be very clear and understable.
+
+The long term purpose is to serve as basis to develop a pure user-space kernel on top of it that could desmitify operating system development.
+
+
+== Dependencies ==
+* GCC
+* NASM
+* QEmu (for testing development)
+* Eclipse (optional, just make development easier and pretty :-) )
+
+== Building the Project ==
+From command line, just type ''make'' and later ''make run'' to exec it with QEmu. Also the makefile is integrated in the Eclipse project, so you could be able to build and launch inside it as usual.
