@@ -10,13 +10,13 @@
 
 #include "drivers/PIT.h"
 
-void uranus_init()
+void init(void)
 {
     // Drivers
     PIT_init(100);	// Initialise the PIT to 100Hz
 }
 
-void kmain()
+void main(void)
 {
-	uranus_init();
+	init();
 }
