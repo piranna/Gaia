@@ -56,12 +56,6 @@ void main(void);
 
 void gaia_main(unsigned long magic, unsigned long addr)
 {
-	/* Clear the screen. */
-	cls();
-
-	// Show multiboot info
-	multiboot_print_info(magic, addr);
-
 	// Initialise all the ISRs and segmentation
 	gaia_init();
 
@@ -70,4 +64,7 @@ void gaia_main(unsigned long magic, unsigned long addr)
 
 	// Start the userspace kernel
 	main();
+
+	// Show multiboot info
+	multiboot_print_info(magic, addr);
 }
