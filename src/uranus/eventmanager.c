@@ -40,3 +40,8 @@ void eventmanager_send(char* event, int data)
 	event_func func = fixedDict_get(&eventmanager_events, event);
 	if(func) func(data);
 }
+
+
+void eventmanager_pumpEvents(void)
+{
+}
