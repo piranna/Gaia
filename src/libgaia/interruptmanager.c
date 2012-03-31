@@ -33,7 +33,7 @@ void interruptmanager_int_handler(registers_t* regs)
 	if(uranus_em_send)
 	{
 		char event[7];
-		snprintf(event, sizeof(event)-1, "IRQ/%d", regs->int_no - IRQ0);
+		snprintf(event, sizeof(event)-1, "irq/%d", regs->int_no - IRQ0);
 
 		uranus_em_send(event, regs->err_code);
 	}
