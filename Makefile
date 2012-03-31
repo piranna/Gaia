@@ -13,9 +13,9 @@ SOURCES      += $(SOURCE_PATH)/gdt.c $(SOURCE_PATH)/idt.c $(SOURCE_PATH)/irq.c
 SOURCES      += $(SOURCE_PATH)/isr.c $(SOURCE_PATH)/multiboot.c
 #SOURCES      += $(SOURCE_PATH)/kheap.c $(SOURCE_PATH)/paging.c
 SOURCES      += $(SOURCE_PATH)/syscall.c
-SOURCES      += $(SOURCE_PATH)/common.c
+SOURCES      += $(SOURCE_PATH)/common.c $(SOURCE_PATH)/video.c
 
-SOURCES_LIBS  = $(SOURCE_LIBS)/stdio.c $(SOURCE_LIBS)/stdlib.c $(SOURCE_LIBS)/video.c
+SOURCES_LIBS  = $(SOURCE_LIBS)/stdio.c $(SOURCE_LIBS)/stdlib.c
 #SOURCES_LIBS += $(SOURCE_LIBS)/ordered_array.c
 
 OBJS_ASM  = $(SOURCE_ASM_PATH)/multiboot.o
