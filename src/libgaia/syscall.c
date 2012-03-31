@@ -1,18 +1,11 @@
 // syscall.c -- Defines the implementation of a system call system.
 //              Written for JamesM's kernel development tutorials.
 
-#include "syscall.h"
-
 #include "idt.h"
 #include "irq.h"
 #include "sys/io.h"
 
-
-t_em_send uranus_em_send = 0;
-void set_eventmanager_send(t_em_send em_send)
-{
-	uranus_em_send = em_send;
-}
+#include "interruptmanager.h"
 
 
 static void* syscalls[] =
