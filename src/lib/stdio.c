@@ -6,8 +6,23 @@
 //#include "syscall.h"
 
 
+typedef int (*t_func_printf)(int, char**, unsigned int*);
+
 extern t_em_send uranus_em_send;
-static int putchar(int c)
+
+
+static int _snprintf_putchar(int c, char** str, unsigned int* size)
+{
+	**str = c;
+	(*str)++;
+	(*size)--;
+
+	return c;
+}
+
+
+/* Put the character C on the screen and return the written character */
+int putchar(int c)
 {
 	if(uranus_em_send)
 		uranus_em_send("VGA/text/putchar", c);
@@ -18,36 +33,43 @@ static int putchar(int c)
 }
 
 
-/* Format a string and print it on the screen, just like the libc
-	function printf. */
-void printf(const char* format, ...)
+static void _printf(const char** format, t_func_printf func_putchar,
+					char** str, unsigned int* size)
 {
-	char** arg = (char**)&format;
-	int c;
+	char** arg = (char**)format + 1;
 
-	arg++;
+	char stack[3];
+	char index = 0;
 
-	while((c = *format++))
+	while((stack[index] = *(*format)++) && *size)
 	{
-		if(c == '%')
+		if(stack[index] == '%')
 		{
+			index++;
+
 			char* p;
 			char buf[20];
 
-			c = *format++;
-			switch(c)
+			stack[index] = *(*format)++;
+			switch(stack[index])
 			{
 				// character
 				case 'c':
 					p = *arg++;
-					putchar(*p);
+					func_putchar(*p, str,size);
 					break;
+
+				// long integer
+				case 'l':
+					index++;
+					stack[index] = *(*format)++;
 
 				// integer (decimal, unsigned or hexadecimal)
 				case 'd':
+				case 'i':
 				case 'u':
 				case 'x':
-					p = itoa(*((int*)arg++), buf, c=='x' ?16 :10);
+					p = itoa(*((int*)arg++), buf, stack[index]=='x' ?16 :10);
 
 					goto string;
 
@@ -58,94 +80,44 @@ void printf(const char* format, ...)
 						p = "(null)";
 
 					string:
-						while(*p)
-							putchar(*p++);
+						while(*p && *size)
+							func_putchar(*p++, str,size);
 					break;
 
 				// No recognized specifier
 				default:
-					putchar('%');
-					putchar(c);
+				{
+					int i = 0;
+					for(; i <= index; i++)
+						func_putchar(stack[i], str,size);
 					break;
+				}
 			}
+
+			index = 0;
 		}
 
 		// Normal character
 		else
-			putchar(c);
+			func_putchar(stack[index], str,size);
 	}
+}
+
+
+/* Format a string and print it on the screen, just like the libc
+	function printf. */
+void printf(const char* format, ...)
+{
+	unsigned int size = 1;
+	_printf(&format, putchar, 0, &size);
 }
 
 
 int snprintf(char* str, size_t size, const char* format,...)
 {
-	char** arg = (char**)&format;
-	int c;
+	unsigned int s = size;
 
-	size_t s = size;
-
-	arg++;
-
-	while((c = *format++) && size)
-	{
-		if(c == '%')
-		{
-			char* p;
-			char buf[20];
-
-			c = *format++;
-			switch(c)
-			{
-				// character
-				case 'c':
-					p = *arg++;
-					putchar(*p);
-					break;
-
-				// integer (decimal, unsigned or hexadecimal)
-				case 'd':
-				case 'u':
-				case 'x':
-					p = itoa(*((int*)arg++), buf, c=='x' ?16 :10);
-
-					goto string;
-
-				// string
-				case 's':
-					p = *arg++;
-					if(!p)
-						p = "(null)";
-
-					string:
-						while(*p && size)
-						{
-							*str = *p++;
-							str++;
-							size--;
-						}
-					break;
-
-				// No recognized specifier
-				default:
-					*str = '%';
-					str++;
-					size--;
-
-					*str = c;
-					str++;
-					size--;
-					break;
-			}
-		}
-
-		// Normal character
-		else
-		{
-			*str = c;
-			str++;
-			size--;
-		}
-	}
+	_printf(&format, _snprintf_putchar, &str, &size);
 
 	*str = '\0';
 

@@ -3,7 +3,8 @@
 
 #include "types.h"
 
-void printf (const char *format, ...);
-int snprintf(char *str, size_t size, const char *format,...);
+int  putchar (int c);
+void printf  (const char *format, ...);
+int  snprintf(char *str, size_t size, const char *format,...);
 
 #endif
