@@ -9,7 +9,7 @@
 
 #include "fixedDict.h"
 
-#include <string.h>
+#include <string.h>	// memset, strcmp, strncpy
 
 
 void fixedDict_init(fixedDict* dict, pairKeyValue* pairs)
@@ -35,7 +35,8 @@ void fixedDict_del(fixedDict* dict, char* key)
 				dict->pairs[i] = dict->pairs[i+1];
 
 			// Remove the last one
-			memset(dict->pairs[dict->length-1], 0, sizeof(pairKeyValue));
+			memset((unsigned char*)&dict->pairs[dict->length-1], 0,
+					sizeof(pairKeyValue));
 			dict->length--;
 		}
 
