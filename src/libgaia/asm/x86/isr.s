@@ -73,22 +73,10 @@ ISR_NOERRCODE 128   ; Syscalls
 %endmacro
 
 
-%macro RESTORE_REGISTERS 0
-    pop ebx         ; reload the original data segment descriptor
-    mov ds, bx
-    mov es, bx
-    mov fs, bx
-    mov gs, bx
-
-    popa            ; Pops edi,esi,ebp...
-    add esp, 8      ; Cleans up the pushed error code and pushed ISR number
-    sti
-    iret            ; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP
-%endmacro
-
-
 ; In isr.c
-extern isr_handler
+[EXTERN isr_handler]
+
+extern restore_registers
 
 ; This is our common ISR stub. It saves the processor state, sets
 ; up for kernel mode segments, calls the C-level fault handler,
@@ -96,4 +84,4 @@ extern isr_handler
 isr_common_stub:
     PUSH_REGISTERS
     call isr_handler
-    RESTORE_REGISTERS
+    jmp restore_registers
