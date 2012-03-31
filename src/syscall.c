@@ -30,14 +30,22 @@ void out(const u8int bytepower, const u16int port, const u8int value)
 	// We should raise some kind of exception to userspace...
 }
 
+t_em_send uranus_em_send = 0;
+void set_eventmanager_send(t_em_send em_send)
+{
+	uranus_em_send = em_send;
+}
+
 
 static void* syscalls[] =
 {
 	&in,
     &out,
     &irq_handler_register,
+    &set_eventmanager_send,
 };
-u32int num_syscalls = 3;
+u32int num_syscalls = sizeof(syscalls)/sizeof(void*);
+//u32int num_syscalls = 4;
 
 
 static void syscall_handler(registers_t* regs)

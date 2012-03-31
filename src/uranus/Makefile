@@ -4,13 +4,14 @@ DEBUG = true
 TARGET = uranus
 
 SOURCE_PATH = .
-SOURCE_LIBS = ../lib
+SOURCE_LIBS = ./lib
 
 SOURCES  = $(SOURCE_PATH)/main.c
 SOURCES += $(SOURCE_PATH)/syscall_userspace.c
+SOURCES += $(SOURCE_PATH)/eventmanager.c
 SOURCES += $(SOURCE_PATH)/drivers/PIT.c $(SOURCE_PATH)/drivers/VGA.c
 
-#SOURCES_LIBS  = $(SOURCE_LIBS)/stdio.c
+SOURCES_LIBS  = $(SOURCE_LIBS)/string.c
 #SOURCES_LIBS += $(SOURCE_LIBS)/ordered_array.c
 
 OBJS = $(SOURCES:.c=.o) $(SOURCES_LIBS:.c=.o)

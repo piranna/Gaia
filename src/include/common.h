@@ -13,6 +13,8 @@ typedef          short s16int;
 typedef unsigned char  u8int;
 typedef          char  s8int;
 
+typedef void (*t_em_send)(char*,int);
+
 void outb(u16int port, u8int value);
 void outw(u16int port, u16int value);
 u8int inb(u16int port);
