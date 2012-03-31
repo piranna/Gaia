@@ -5,6 +5,7 @@
 
 #include "idt.h"
 #include "irq.h"
+#include "sys/io.h"
 
 
 int in(const u8int bytepower, const u16int port)
@@ -13,6 +14,7 @@ int in(const u8int bytepower, const u16int port)
 	{
 		case 0:	return inb(port);
 		case 1:	return inw(port);
+		case 2:	return inl(port);
 	}
 
 	// We should raise some kind of exception to userspace...
@@ -23,8 +25,9 @@ void out(const u8int bytepower, const u16int port, const u8int value)
 {
 	switch(bytepower)
 	{
-		case 0:	return outb(port, value);
-		case 1:	return outw(port, value);
+		case 0:	outb(port, value);
+		case 1:	outw(port, value);
+		case 2:	outl(port, value);
 	}
 
 	// We should raise some kind of exception to userspace...
