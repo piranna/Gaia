@@ -126,11 +126,11 @@ void Multiboot_PrintInfo(unsigned long magic, unsigned long addr)
 // initialises the GDT and IDT.
 void init(void)
 {
-    // Initialise the global descriptor table.
-    gdt_init();
+    gdt_init();		// Initialise the global descriptor table.
+    idt_init();		// Initialise the interrupt descriptor table.
 
-    // Initialise the interrupt descriptor table.
-    idt_init();
+//    // Drivers
+//    PIT_init(50);	// Initialise timer to 50Hz
 }
 
 void cmain(unsigned long magic, unsigned long addr)

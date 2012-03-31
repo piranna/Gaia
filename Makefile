@@ -9,12 +9,14 @@ SOURCE_LIBS = src/lib
 SOURCE_ASM_PATH = src/asm/$(PLATFORM)
 
 SOURCES      = $(SOURCE_PATH)/main.c
-SOURCES     += $(SOURCE_PATH)/gdt.c $(SOURCE_PATH)/idt.c $(SOURCE_PATH)/isr.c
+SOURCES     += $(SOURCE_PATH)/gdt.c $(SOURCE_PATH)/idt.c $(SOURCE_PATH)/irq.c
+SOURCES     += $(SOURCE_PATH)/isr.c
 SOURCES     += $(SOURCE_PATH)/common.c
 SOURCES_LIBS = $(SOURCE_LIBS)/stdio.c
 
 OBJS_ASM  = $(SOURCE_ASM_PATH)/multiboot.o
-OBJS_ASM += $(SOURCE_ASM_PATH)/gdt.o $(SOURCE_ASM_PATH)/interrupt.o
+OBJS_ASM += $(SOURCE_ASM_PATH)/gdt.o $(SOURCE_ASM_PATH)/idt.o
+OBJS_ASM += $(SOURCE_ASM_PATH)/irq.o $(SOURCE_ASM_PATH)/isr.o
 OBJS      = $(SOURCES:.c=.o) $(SOURCES_LIBS:.c=.o) $(OBJS_ASM)
 
 CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement
@@ -59,6 +61,10 @@ $(SOURCE_ASM_PATH)/gdt.o:
 $(SOURCE_ASM_PATH)/idt.o:
 #	$(CC) -o $@ -c $(SOURCE_ASM_PATH)/idt.s -m32 -nostdinc -nostdlib -fno-builtin
 	nasm $(ASFLAGS) $(SOURCE_ASM_PATH)/idt.s
+
+$(SOURCE_ASM_PATH)/irq.o:
+#	$(CC) -o $@ -c $(SOURCE_ASM_PATH)/irq.s -m32 -nostdinc -nostdlib -fno-builtin
+	nasm $(ASFLAGS) $(SOURCE_ASM_PATH)/irq.s
 
 $(SOURCE_ASM_PATH)/isr.o:
 #	$(CC) -o $@ -c $(SOURCE_ASM_PATH)/isr.s -m32 -nostdinc -nostdlib -fno-builtin
