@@ -55,6 +55,9 @@ int VGA_text_putchar(int c)
 {
 	switch(c)
 	{
+		case '\0':
+			return c;
+
 		case '\b':
 			xpos--;
 			if(xpos < 0)
