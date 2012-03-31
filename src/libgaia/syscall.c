@@ -50,7 +50,9 @@ static void syscall_handler(registers_t* regs)
       : "r" (regs->edi), "r" (regs->esi), "r" (regs->edx), "r" (regs->ecx),
         "r" (regs->ebx), "r" (location));
 
-    printf("syscall %x %x\t%x %d\n", &regs, regs, &(regs->eax), regs->eax);
+    // Ugly hack, force a delay before asign the value - Race condition?
+    int i=0;
+    for(;i<10;i++) printf("");
 
     regs->eax = ret;
 }
