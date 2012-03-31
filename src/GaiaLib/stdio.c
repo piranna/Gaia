@@ -55,8 +55,7 @@ static void _printf(const char** format, t_func_printf func_putchar,
 			{
 				// character
 				case 'c':
-					p = *arg++;
-					func_putchar(*p, str,size);
+					func_putchar(*((int*)arg++), str,size);
 					break;
 
 				// long integer
