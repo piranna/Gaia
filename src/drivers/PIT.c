@@ -18,7 +18,7 @@
 u32int tick = 0;
 
 
-static void PIT_callback(registers_t regs)
+static void PIT_callback(registers_t* regs)
 {
    tick++;
 
@@ -36,10 +36,10 @@ void PIT_init(u32int frequency)
 	irq_register_handler(IRQ0, &PIT_callback);
 
    // Send the command byte.
-   outb(0x43, 0x36);
+   syscall_outb(0x43, 0x36);
 
    // Divisor has to be sent byte-wise, so split here into upper/lower bytes.
    // Send the frequency divisor.
-   outb(0x40, (u8int)(divisor & 0xFF));
-   outb(0x40, (u8int)((divisor>>8) & 0xFF));
+   syscall_outb(0x40, (u8int)(divisor & 0xFF));
+   syscall_outb(0x40, (u8int)((divisor>>8) & 0xFF));
 }
