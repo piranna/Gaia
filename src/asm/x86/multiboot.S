@@ -80,7 +80,7 @@ multiboot_entry:
     call    EXT_C(printf)
 
 halt:
-    cli             // Disable interruptions
+//    cli             // Disable interruptions
     hlt             // Halt CPU
     jmp     halt    // Repeat if for whatever reason CPU is still working
 
