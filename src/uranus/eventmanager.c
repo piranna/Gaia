@@ -13,17 +13,28 @@
 #include "fixedDict.h"
 #include "fixedQueue.h"
 #include "syscall.h"
+#include "TestAndSet.h"
 
 
-static pairKeyValue eventmanager_events_pairs[10];
+typedef struct
+{
+	char event[32];
+	int data;
+} pairEventData;
+
+
 static fixedDict eventmanager_events;
-
 static fixedQueue eventmanager_queue;
 
 
 void eventmanager_init(void)
 {
+	static pairKeyValue eventmanager_events_pairs[10];
+	static pairEventData eventmanager_queue_items[10];
+
 	fixedDict_init(&eventmanager_events, eventmanager_events_pairs);
+	fixedQueue_init(&eventmanager_queue, eventmanager_queue_items,
+					sizeof(pairEventData));
 }
 
 
@@ -40,30 +51,35 @@ void eventmanager_deattach(char* event)
 
 void eventmanager_send(char* event, int data)
 {
-	fixedQueue_append(&eventmanager_queue, );
+	pairEventData pair;
+	strncpy(pair.event, event, sizeof(pair.event));
+	pair.data = data;
 
-//	event_func func = fixedDict_get(&eventmanager_events, event);
-//	if(func) func(data);
+	fixedQueue_append(&eventmanager_queue, &pair);
+
+	event_func func = fixedDict_get(&eventmanager_events, event);
+	if(func) func(data);
 }
 
 
 void eventmanager_pumpEvents(void)
 {
-	// Don't start pumping if we are doing it yet
-	// TestAndSet() code found at
-	// http://comsci.liu.edu/~jrodriguez/testandset2.html
-	if(TestAndSet(&pumping)) return;
-
-	while(!fixedQueue_isEmpty(&eventmanager_queue))
-	{
-		pair = fixedQueue_head(&eventmanager_queue);
-
-	//	event_func func = fixedDict_get(&eventmanager_events, pair->event);
-	//	if(func) func(pair->data);
-
-		fixedQueue_pop(&eventmanager_queue);
-	}
-
-	// Say we finished to pump events
-	pumping = false;
+//	static int pumping = 0;
+//
+//	// Don't start pumping if we are doing it yet
+//	if(TestAndSet(&pumping)) return;
+//
+//	// Pump events until there's no more
+//	while(!fixedQueue_isEmpty(&eventmanager_queue))
+//	{
+//		pairEventData* pair = fixedQueue_head(&eventmanager_queue);
+//
+//		event_func func = fixedDict_get(&eventmanager_events, pair->event);
+//		if(func) func(pair->data);
+//
+//		fixedQueue_pop(&eventmanager_queue);
+//	}
+//
+//	// Say we finished to pump events
+//	pumping = 0;
 }

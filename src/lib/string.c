@@ -57,9 +57,7 @@ int strcmp(const char* str1, const char* str2)
 // Copy len bytes from src to dest.
 void memcpy(u8int* dest, const u8int* src, u32int len)
 {
-    const u8int* sp = (const u8int*)src;
-    u8int* dp = (u8int*)dest;
-    for(; len; len--) *dp++ = *sp++;
+    for(; len; len--) *dest++ = *src++;
 }
 
 //// Concatenate the NULL-terminated string src onto
@@ -93,8 +91,8 @@ void memcpy(u8int* dest, const u8int* src, u32int len)
 // Copy the NULL-terminated string src into dest up to num, and return dest.
 char* strncpy(char* dest, const char* src, size_t num)
 {
+	char* dp = dest;
     for(; num; --num)
-    	*dest++ = *src ? *src++ : '\0';
-
+    	*dp++ = *src ? *src++ : '\0';
     return dest;
 }
