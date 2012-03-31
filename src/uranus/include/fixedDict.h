@@ -22,8 +22,10 @@ typedef struct
 	unsigned int length;
 } fixedDict;
 
-void  fixedDict_del(fixedDict dict, char* key);
-void* fixedDict_get(fixedDict dict, char* key);
-void  fixedDict_set(fixedDict dict, char* key, void* value);
+void fixedDict_init(fixedDict* dict, pairKeyValue* pairs);
+
+void  fixedDict_del(fixedDict* dict, char* key);
+void* fixedDict_get(fixedDict* dict, char* key);
+void  fixedDict_set(fixedDict* dict, char* key, void* value);
 
 #endif /* FIXEDDICT_H_ */
