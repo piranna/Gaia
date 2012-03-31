@@ -83,4 +83,6 @@ int VGA_text_putchar(int c)
 void VGA_init(void)
 {
 	VGA_text_cls();
+
+	eventmanager_attach("putchar", VGA_text_putchar);
 }
