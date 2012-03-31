@@ -8,7 +8,7 @@
 #ifndef STRING_H_
 #define STRING_H_
 
-typedef unsigned int size_t;
+#include "types.h"
 
 void memset(unsigned char* dest, unsigned char val, unsigned int len);
 
