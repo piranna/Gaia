@@ -19,8 +19,8 @@ int strcmp(const char* str1, const char* str2);
 //const void* memchr(const void* ptr, int value, int num);
 //int memcmp(const void* ptr1, const void* ptr2, int num);
 
-//// Copy len bytes from src to dest.
-//void memcpy(u8int *dest, const u8int *src, u32int len);
+// Copy len bytes from src to dest.
+void memcpy(unsigned char* dest, const unsigned char* src, unsigned int len);
 
 //// Concatenate the NULL-terminated string src onto
 //// the end of dest, and return dest.
