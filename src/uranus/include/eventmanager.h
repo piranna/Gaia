@@ -10,6 +10,8 @@
 
 typedef int (*event_func)(int);
 
+void eventmanager_init(void);
+
 void eventmanager_attach(char* event, event_func);
 void eventmanager_deattach(char* event);
 

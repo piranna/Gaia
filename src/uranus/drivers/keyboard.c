@@ -7,17 +7,13 @@
 
 #include "syscall.h"
 
-/* hardcoded */
-#define IRQ1  33	// keyboard
-/* hardcoded */
-
 
 /* KBDUS means US Keyboard Layout. This is a scancode table
 *  used to layout a standard US keyboard. I have left some
 *  comments in to give you an idea of what key is what, even
 *  though I set it's array index to 0. You can change that to
 *  whatever you want using a macro, if you wish! */
-unsigned char kbdus[128] =
+static unsigned char kbdus[128] =
 {
 	0,	// Error code
 
@@ -47,7 +43,7 @@ unsigned char kbdus[128] =
 };
 
 /* Handles the keyboard interrupt */
-static void keyboard_handler(registers_t* r)
+static void keyboard_handler(int dumb)
 {
     /* Read from the keyboard's data buffer */
     unsigned char scancode = syscall_inb(0x60);
@@ -80,5 +76,5 @@ static void keyboard_handler(registers_t* r)
 /* Installs the keyboard handler into IRQ1 */
 void keyboard_init(void)
 {
-	syscall_irq_register_handler(IRQ1, &keyboard_handler);
+	eventmanager_attach("IRQ/1", &keyboard_handler);
 }
