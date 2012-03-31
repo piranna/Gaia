@@ -12,6 +12,8 @@
 #include "gdt.h"
 #include "idt.h"
 
+#include "drivers/PIT.h"
+
 
 /* Check if the bit BIT in FLAGS is set. */
 #define CHECK_FLAG(flags,bit)	((flags) & (bit))
@@ -129,8 +131,11 @@ void init(void)
     gdt_init();		// Initialise the global descriptor table.
     idt_init();		// Initialise the interrupt descriptor table.
 
-//    // Drivers
-//    PIT_init(50);	// Initialise timer to 50Hz
+    // Enable interruptions
+    asm volatile("sti");
+
+    // Drivers
+    PIT_init(100);	// Initialise the PIT to 100Hz
 }
 
 void cmain(unsigned long magic, unsigned long addr)

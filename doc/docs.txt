@@ -18,7 +18,3 @@ qemu -kernel kernel
 Compile for 64bits:
 
 Change assembler pushl instructions for pushq and %a.. registers for %r..
-
-
-http://pdos.csail.mit.edu/papers/exo:chen-meng.pdf
-http://www.docstoc.com/docs/19697222/The-Exokernel-Operating-System-Architecture

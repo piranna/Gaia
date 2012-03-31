@@ -1,0 +1,6 @@
+http://pdos.csail.mit.edu/papers/exo:chen-meng.pdf
+http://www.docstoc.com/docs/19697222/The-Exokernel-Operating-System-Architecture
+
+Hardware text mode cursor
+    http://www.osdever.net/FreeVGA/vga/textcur.htm
+    http://wiki.osdev.org/Text_Mode_Cursor
