@@ -11,7 +11,7 @@
 #ifndef PIT_H_
 #define PIT_H_
 
-#include "common.h"
+#include "types.h"
 
 void PIT_init(u32int frequency);
 

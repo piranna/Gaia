@@ -6,7 +6,7 @@
 #ifndef SYSCALL_H_USERSPACE
 #define SYSCALL_H_USERSPACE
 
-#include "common.h"
+#include "types.h"
 #include "syscall_defines.h"
 
 DECL_SYSCALL2(in,  const u8int, const u16int)

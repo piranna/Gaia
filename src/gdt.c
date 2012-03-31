@@ -9,7 +9,7 @@
 
 #include <string.h>
 
-#include "common.h"
+#include "types.h"
 #include "tss.h"
 
 
