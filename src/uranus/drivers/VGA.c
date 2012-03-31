@@ -13,6 +13,7 @@
 #define LINES     25		/* The number of lines. */
 #define ATTRIBUTE 7			/* The attribute of an character. */
 #define VIDEO     0xB8000	/* The video memory address. */
+#define TAB_WIDTH 4
 
 /* Variables. */
 static int xpos;	/* Save the X position. */
@@ -54,6 +55,12 @@ int VGA_text_putchar(int c)
 {
 	switch(c)
 	{
+		case '\t':
+			xpos = (xpos+TAB_WIDTH) & ~(TAB_WIDTH-1);
+			if(xpos >= COLUMNS)
+				goto newline;
+			return c;
+
 		newline:
 
 		case '\n':
