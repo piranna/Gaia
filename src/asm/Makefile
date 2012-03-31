@@ -11,7 +11,7 @@ OBJS += $(SOURCE_PATH)/gdt.o $(SOURCE_PATH)/idt.o $(SOURCE_PATH)/interrupt.o
 OBJS += $(SOURCE_PATH)/irq.o $(SOURCE_PATH)/isr.o
 OBJS += $(SOURCE_PATH)/process.o $(SOURCE_PATH)/tss.o
 
-CINCS = -I../include
+CINCS = -Iinclude
 CFLAGS = $(CINCS) \
          -m32 -nostdinc -fno-builtin -nostdlib -fno-stack-protector
 
