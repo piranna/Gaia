@@ -11,7 +11,7 @@
 
 #include "gdt.h"
 #include "idt.h"
-#include "paging.h"
+//#include "paging.h"
 #include "syscall.h"
 
 
