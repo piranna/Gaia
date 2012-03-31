@@ -8,6 +8,7 @@
 #include "interruptmanager.h"
 
 #include "isr.h"
+#include <stdio.h>
 
 
 /* hardcoded */
