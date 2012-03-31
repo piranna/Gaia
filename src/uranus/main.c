@@ -16,13 +16,11 @@
 
 void init(void)
 {
-//	syscall_set_eventmanager_send(eventmanager_send);
+	syscall_set_eventmanager_send(eventmanager_send);
 
 	// Drivers
     PIT_init(100);	// Initialise the PIT to 100Hz
     VGA_init();
-
-	syscall_set_eventmanager_send(eventmanager_send);
 }
 
 void main(void)
