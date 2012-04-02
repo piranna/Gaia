@@ -26,7 +26,7 @@ int putchar(int c)
 {
 	if(uranus_em_send)
 		uranus_em_send("VGA/text/putchar", c);
-//		//return uranus_em_send("VGA/text/putchar", c);
+//		return uranus_em_send("VGA/text/putchar", c);
 
 	// We should raise some kind of exception to userspace...
 	return 0;

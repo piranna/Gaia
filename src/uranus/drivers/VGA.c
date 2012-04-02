@@ -51,7 +51,7 @@ static void VGA_text_linefeed(void)
 
 /* Put the character C on the screen and return the written character,
  * just like the libc function printf. */
-int VGA_text_putchar(int c)
+static int VGA_text_putchar(int c)
 {
 	switch(c)
 	{
