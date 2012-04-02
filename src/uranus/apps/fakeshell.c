@@ -55,6 +55,9 @@ void fakeshell_init(void)
 
 	buffer[0] = '\0';
 
+	printf("###\n");
 	printf("### fakeshell started ###\n");
+	printf("###\n");
+	printf("Type anything and press return, and i will print it again\n");
 	prompt();
 }
