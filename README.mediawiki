@@ -3,7 +3,7 @@ Gaia is an exokernel/framework designed based on [http://www.gnu.org/software/gr
 
 The long term purpose is to serve as basis to develop a pure user-space kernel on top of it that could desmitify operating system development.
 
-This code can be found at [https://github.com/piranna/Gaia GitHub]. Currently it's mainly unmaintained in benefict of [http://code.google.com/r/piranna-p14p/ PyMite4Multiboot], a port of PyMite Python virtual machine to x86 platform. On the other hand, it's a sucessful use case since all the base code is recicled from libGaia core source code, and thanks to it in the future i will be able to make libGaia an independent project common to both and re-start development of Gaia using it as basis.
+This code can be found at [https://github.com/piranna/Gaia GitHub]. In the future it will be splited in several subprojects in benefict of [http://code.google.com/r/piranna-p14p/ PyMite4Multiboot], a port of PyMite Python virtual machine to x86 platform. On the other hand, it's a sucessful use case since all the base code is recicled from libGaia core source code, and thanks to it in the future i will be able to make libGaia an independent project common to both and re-start development of Gaia using it as basis.
 
 
 == Dependencies ==
