@@ -36,6 +36,6 @@ void main(void)
 {
 	init();
 
-//	// Start fake shell to interact with the user in some way...
-//	fakeshell_init();
+	// Start fake shell to interact with the user in some way...
+	fakeshell_init();
 }

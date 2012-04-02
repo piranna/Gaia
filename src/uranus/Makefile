@@ -14,7 +14,8 @@ DRIVERS  = $(SOURCE_PATH)/drivers/PIT.c $(SOURCE_PATH)/drivers/VGA.c
 DRIVERS += $(SOURCE_PATH)/drivers/keyboard.c $(SOURCE_PATH)/drivers/term.c
 DRIVERS += $(SOURCE_PATH)/keyboard_layouts/us.c
 
-APPS = $(SOURCE_PATH)/apps/fakeshell.c
+APPS  = $(SOURCE_PATH)/apps/date.c $(SOURCE_PATH)/apps/echo.c
+APPS += $(SOURCE_PATH)/apps/fakeshell.c
 
 SOURCES_LIBS  = $(SOURCE_LIBS)/fixedDict.c $(SOURCE_LIBS)/fixedQueue.c
 #SOURCES_LIBS += $(SOURCE_LIBS)/ordered_array.c
@@ -23,7 +24,7 @@ OBJS = $(SOURCES:.c=.o) $(DRIVERS:.c=.o) $(SOURCES_LIBS:.c=.o) $(APPS:.c=.o)
 
 CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement
 #CWARN = -Wall -Wstrict-prototypes -Wdeclaration-after-statement -Werror
-CINCS  = -I$(SOURCE_PATH)/include
+CINCS  = -I$(SOURCE_PATH)/include -I$(SOURCE_PATH)/apps/include
 CINCS += -I$(SOURCE_PATH)/../asm/include -I$(SOURCE_PATH)/../GaiaLib/include
 
 ifeq ($(DEBUG),true)

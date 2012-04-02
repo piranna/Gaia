@@ -12,6 +12,8 @@
 
 #include "eventmanager.h"
 
+#include "echo.h"
+
 
 #define BUFFER_SIZE 1024
 
@@ -26,19 +28,13 @@ static void prompt(void)
 }
 
 
-static void echo(char* line)
-{
-	printf("%s\n", line);
-}
-
-
 static void press_handler(char key)
 {
 	if(key == '\n')
 	{
 		printf("\n");
 
-		echo(buffer);
+		echo_run(buffer);
 
 		buffer[0] = '\0';
 		index = 0;
@@ -54,7 +50,10 @@ void fakeshell_init(void)
 	eventmanager_attach("term/press/character", press_handler);
 
 	buffer[0] = '\0';
+}
 
+void fakeshell_run(void)
+{
 	printf("###\n");
 	printf("### fakeshell started ###\n");
 	printf("###\n");

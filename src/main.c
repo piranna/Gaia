@@ -71,7 +71,7 @@ void gaia_main(unsigned long magic, unsigned long addr)
 	// Show multiboot info
 	multiboot_print_info(magic, addr);
 
-	// Start fake shell to interact with the user in some way...
+	// Run the fake shell to interact with the user in some way...
 	// It's started here to be showed after multiboot info (to be deleted...)
-	fakeshell_init();
+	fakeshell_run();
 }
