@@ -42,11 +42,11 @@ static void term_handler_press(unsigned char scancode)
 	}
 
 	char c = kbd[scancode];
-	printf("term_handler_press: %u %c\n", scancode, c);
+//	printf("term_handler_press: '%u' '%c'\n", scancode, c);
 
 	eventmanager_send("term/press/character", c);
 
-    eventmanager_send("VGA/text/putchar", c);
+    putchar(c);
 }
 
 static void term_handler_release(unsigned char scancode)

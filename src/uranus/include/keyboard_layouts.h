@@ -14,6 +14,6 @@
 #define KB_ALT    4
 
 // Typedef to define available keyboard layouts (currently only up to KB_SHIFT)
-typedef unsigned char keyboard_layout[1 + KB_SHIFT][128];
+typedef char keyboard_layout[1 + KB_SHIFT][128];
 
 #endif /* KEYBOARD_LAYOUTS_H_ */

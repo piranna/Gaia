@@ -9,7 +9,7 @@
 
 
 /* Handles the keyboard interrupt */
-static void keyboard_handler(void)
+static void keyboard_handler(int dumb)
 {
     /* Read from the keyboard's data buffer */
     unsigned char scancode = syscall_inb(0x60);
@@ -35,5 +35,6 @@ static void keyboard_handler(void)
 /* Installs the keyboard handler into IRQ1 */
 void keyboard_init(void)
 {
-	eventmanager_attach("IRQ/1", &keyboard_handler);
+//	eventmanager_attach("IRQ/1", &keyboard_handler);
+	eventmanager_attach("irq/1", keyboard_handler);
 }

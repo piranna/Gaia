@@ -28,16 +28,7 @@ void _idt_handler(registers_t* regs)
 {
 	isr_t handler = irq_entries[regs->int_no];
     if(handler)
-    {
-    	int aux = regs->int_no;
-    	if(aux == 0x80)
-    		printf("[1] _idt_handler %x %x %d\n", regs, &(regs->eax), regs->eax);
-
         handler(regs);
-
-    	if(aux == 0x80)
-    		printf("[2] _idt_handler %x %x %d\n", regs, &(regs->eax), regs->eax);
-    }
     else
         printf("unhandled interrupt: %d\n", regs->int_no);
 }

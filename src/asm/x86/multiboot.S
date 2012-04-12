@@ -80,17 +80,17 @@ multiboot_entry:
     /* Now enter the C main function... */
     call    EXT_C(gaia_main)
 
-    /* Halt. */
-    pushl   $halt_message
-    call    EXT_C(printf)
+//    /* Halt. */
+//    pushl   $halt_message
+//    call    EXT_C(printf)
 
 halt:
 //    cli             // Disable interruptions
     hlt             // Halt CPU
     jmp     halt    // Repeat if for whatever reason CPU is still working
 
-halt_message:
-    .asciz  "Halted."
+//halt_message:
+//    .asciz  "Halted."
 
 
 .comm   stack, STACK_SIZE   /* Our stack area. */

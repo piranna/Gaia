@@ -12,6 +12,10 @@ int syscall_inb(const u16int port)
 {
 	return syscall_in(0, port);
 }
+int syscall_inb_p(const u16int port)
+{
+	return syscall_in(3, port);
+}
 int syscall_outb(const u16int port, const u8int value)
 {
 	return syscall_out(0, port,value);

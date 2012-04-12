@@ -1,0 +1,14 @@
+[http://bochs.sourceforge.net/ Bochs] is a x86 emulator.
+
+= Required packages =
+* bochs
+* bochs-x (to be displayed on X11 window system)
+
+= Errors =
+== dlopen failed for module 'x': file not found ==
+Bochs is trying to find the X11 display driver, just install the 'bochs-x' package
+
+== ROM: System BIOS must end at 0xfffff ==
+BIOS file must end at 0xfffff address, so you need to get the size of the BIOS file in bytes and sustract it from 0xfffff at bochsrc.txt. For example, for a file of 131072 (0x20000) bytes the begining address is 0xe0000:
+
+ romimage:       file=/usr/share/bochs/BIOS-bochs-latest, address=0xe0000
