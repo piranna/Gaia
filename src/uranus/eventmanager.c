@@ -10,29 +10,24 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "fixedDict.h"
 #include "fixedQueue.h"
 #include "syscall.h"
 #include "TestAndSet.h"
 
 
-typedef struct
-{
-	char event[32];
-	int data;
-} pairEventData;
-
-
 static fixedDict eventmanager_events;
+static fixedDict eventmanager_events_delegated;
 static fixedQueue eventmanager_queue;
 
 
 void eventmanager_init(void)
 {
 	static pairKeyValue eventmanager_events_pairs[10];
+	static pairKeyValue eventmanager_events_delegated_pairs[10];
 	static pairEventData eventmanager_queue_items[10];
 
 	fixedDict_init(&eventmanager_events, eventmanager_events_pairs);
+	fixedDict_init(&eventmanager_events_delegated, eventmanager_events_delegated_pairs);
 	fixedQueue_init(&eventmanager_queue, eventmanager_queue_items,
 					sizeof(pairEventData));
 	eventmanager_queue.capacity = 10;	// Hugly hack
@@ -50,6 +45,34 @@ void eventmanager_deattach(char* event)
 }
 
 
+void eventmanager_attach_delegated(char* event, fixedDict* events)
+{
+	fixedDict_set(&eventmanager_events_delegated, event, events);
+}
+
+void eventmanager_deattach_delegated(char* event)
+{
+	fixedDict_del(&eventmanager_events_delegated, event);
+}
+
+
+static void eventmanager_dispatch(pairEventData* pair)
+{
+	event_func func = fixedDict_get(&eventmanager_events, pair->event);
+	if(func)
+		func(pair->data);
+
+	fixedDict* dict = fixedDict_get(&eventmanager_events_delegated,
+									pair->event);
+	if(dict)
+	{
+		func = fixedDict_get(dict, pair->event);
+		if(func)
+			func(pair->data);
+	}
+}
+
+
 void eventmanager_send(char* event, int data)
 {
 	pairEventData pair;
@@ -58,8 +81,11 @@ void eventmanager_send(char* event, int data)
 
 	fixedQueue_append(&eventmanager_queue, &pair);
 
-	event_func func = fixedDict_get(&eventmanager_events, event);
-	if(func) func(data);
+	// This should not be here, eventmanager_pumpEvents() should be used for
+	// real queued events, but since i have problems with 'VGA/text/putchar'
+	// events (race condition?) and would need some kind of locking for the
+	// queue, i dispatch it here directly by the moment
+	eventmanager_dispatch(&pair);
 }
 
 
@@ -75,11 +101,7 @@ void eventmanager_pumpEvents(void)
 	{
 		pairEventData* pair = fixedQueue_head(&eventmanager_queue);
 
-		event_func func = fixedDict_get(&eventmanager_events, pair->event);
-		if(func)
-			func(pair->data);
-//		else
-//			printf("\t\t\tUnknown event '%s'\n", pair->event);
+//		eventmanager_dispatch(pair);
 
 		fixedQueue_pop(&eventmanager_queue);
 	}
