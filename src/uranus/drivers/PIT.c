@@ -8,8 +8,7 @@
 // timer.c -- Initialises the PIT, and handles clock updates.
 // Written for JamesM's kernel development tutorials.
 
-#include <stdio.h>
-
+#include "eventmanager.h"
 #include "syscall.h"
 
 
@@ -19,8 +18,13 @@ static void PIT_handler(void)
 
 	tick++;
 
+	eventmanager_send("PIT/second/mili", tick);
+
+	if(!(tick % 10))
+    	eventmanager_send("PIT/second/hundredth", tick);
+
 	if(!(tick % 100))
-		printf("Tick: %d\n", tick);
+    	eventmanager_send("PIT/second/tenth", tick);
 }
 
 void PIT_init(u32int frequency)

@@ -11,6 +11,8 @@
 #include "eventmanager.h"
 #include "syscall.h"
 
+#include "scheudler.h"
+
 #include "drivers/PIT.h"
 #include "drivers/VGA.h"
 #include "drivers/keyboard.h"
@@ -23,10 +25,13 @@ void init(void)
 	syscall_set_eventmanager_send(eventmanager_send);
 	syscall_set_eventmanager_pumpEvents(eventmanager_pumpEvents);
 
+	// Start task scheudler
+	scheudler_init();
+
 	// Drivers
     VGA_init();
 
-//    PIT_init(100);	// Initialise the PIT to 100Hz
+    PIT_init(100);	// Initialise the PIT to 100Hz
     keyboard_init();
 
     term_init();

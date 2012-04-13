@@ -5,6 +5,7 @@
  * Notes: No warranty expressed or implied. Use at own risk.
  */
 
+#include "eventmanager.h"
 #include "syscall.h"
 
 

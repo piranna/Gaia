@@ -6,9 +6,8 @@ TARGET = uranus
 SOURCE_PATH = .
 SOURCE_LIBS = ./lib
 
-SOURCES  = $(SOURCE_PATH)/main.c
-SOURCES += $(SOURCE_PATH)/syscall.c
-SOURCES += $(SOURCE_PATH)/eventmanager.c
+SOURCES  = $(SOURCE_PATH)/main.c $(SOURCE_PATH)/syscall.c
+SOURCES += $(SOURCE_PATH)/eventmanager.c $(SOURCE_PATH)/scheudler.c
 
 DRIVERS  = $(SOURCE_PATH)/drivers/PIT.c $(SOURCE_PATH)/drivers/VGA.c
 DRIVERS += $(SOURCE_PATH)/drivers/keyboard.c $(SOURCE_PATH)/drivers/term.c
