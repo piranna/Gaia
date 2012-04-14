@@ -12,15 +12,62 @@
 #include <stdio.h>
 
 #include "eventmanager.h"
+#include "fixedQueue.h"
 
 
-static void tenth_handler(u32int tick)
+static fixedQueue scheudler_queue;
+
+
+//static void scheudler_mili_handler(u32int tick)
+//{
+//}
+
+static void scheudler_tenth_handler(u32int tick)
 {
-	printf("Tick: %d\n", tick);
+//	printf("Tick: %d\n", tick);
+
+	if(!fixedQueue_isEmpty(&scheudler_queue))
+	{
+		// Get first process on the queue
+		Process* process = fixedQueue_head(&scheudler_queue);
+
+		// Run process
+		process->pumpEvents();
+
+//		// Put the process at the end
+//		fixedQueue_append(&scheudler_queue, process);
+//		fixedQueue_pop(&scheudler_queue);
+	}
+}
+
+
+void scheudler_load(Process* process)
+{
+	fixedQueue_append(&scheudler_queue, process);
+}
+
+
+void scheudler_yield(void)
+{
+
 }
 
 
 void scheudler_init(void)
 {
-	eventmanager_attach("PIT/second/tenth", tenth_handler);
+	static Process scheudler_queue_items[10];
+
+	// [Hack] Initting by hand to avoid stack call (i don't know why it fails)
+	scheudler_queue.items = scheudler_queue_items;
+	scheudler_queue.length = 0;
+	scheudler_queue.capacity = 10;
+	scheudler_queue.first = 0;
+	scheudler_queue.itemSize = sizeof(Process);
+
+//	fixedQueue_init(&scheudler_queue, scheudler_queue_items, sizeof(Process));
+//	scheudler_queue.capacity = 10;	// Hugly hack
+
+	// Set events
+//	eventmanager_attach("PIT/second/mili", scheudler_mili_handler);
+	eventmanager_attach("PIT/second/tenth", scheudler_tenth_handler);
 }
