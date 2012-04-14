@@ -31,7 +31,7 @@ void init(void)
 	// Drivers
     VGA_init();
 
-    PIT_init(100);	// Initialise the PIT to 100Hz
+    PIT_init(1000);	// Initialise the PIT to 100Hz
     keyboard_init();
 
     term_init();

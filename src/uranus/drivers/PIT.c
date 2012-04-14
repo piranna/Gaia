@@ -18,13 +18,20 @@ static void PIT_handler(void)
 
 	tick++;
 
+	// Milisecond
 	eventmanager_send("PIT/second/mili", tick);
 
+	// Hundreth of second
 	if(!(tick % 10))
     	eventmanager_send("PIT/second/hundredth", tick);
 
+	// Tenth of second
 	if(!(tick % 100))
     	eventmanager_send("PIT/second/tenth", tick);
+
+	// Second
+	if(!(tick % 1000))
+    	eventmanager_send("PIT/second", tick);
 }
 
 void PIT_init(u32int frequency)

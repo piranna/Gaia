@@ -7,6 +7,8 @@
 
 #include "fixedQueue.h"
 
+#include <string.h>
+
 
 void fixedQueue_init(fixedQueue* queue, void* items, unsigned int itemSize)
 {
