@@ -50,10 +50,10 @@ void eventmanager_attach_delegated(char* event, fixedDict* events)
 	fixedDict_set(&eventmanager_events_delegated, event, events);
 }
 
-void eventmanager_deattach_delegated(char* event)
-{
-	fixedDict_del(&eventmanager_events_delegated, event);
-}
+//void eventmanager_deattach_delegated(char* event)
+//{
+//	fixedDict_del(&eventmanager_events_delegated, event);
+//}
 
 
 static void eventmanager_dispatch(pairEventData* pair)

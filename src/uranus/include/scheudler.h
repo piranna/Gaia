@@ -8,10 +8,12 @@
 #ifndef SCHEUDLER_H_
 #define SCHEUDLER_H_
 
+typedef void (*send_func)(char*, int);
 typedef void (*pumpEvents_func)(void);
 
 typedef struct
 {
+	send_func send;
 	pumpEvents_func pumpEvents;
 } Process;
 
