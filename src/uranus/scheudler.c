@@ -57,15 +57,8 @@ void scheudler_init(void)
 {
 	static Process scheudler_queue_items[10];
 
-	// [Hack] Initting by hand to avoid stack call (i don't know why it fails)
-	scheudler_queue.items = scheudler_queue_items;
-	scheudler_queue.length = 0;
-	scheudler_queue.capacity = 10;
-	scheudler_queue.first = 0;
-	scheudler_queue.itemSize = sizeof(Process);
-
-//	fixedQueue_init(&scheudler_queue, scheudler_queue_items, sizeof(Process));
-//	scheudler_queue.capacity = 10;	// Hugly hack
+	fixedQueue_init(&scheudler_queue, scheudler_queue_items, sizeof(Process));
+	scheudler_queue.capacity = 10;	// Hugly hack
 
 	// Set events
 //	eventmanager_attach("PIT/second/mili", scheudler_mili_handler);
