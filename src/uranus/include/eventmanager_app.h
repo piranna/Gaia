@@ -13,6 +13,7 @@
 #include "eventmanager.h"
 #include "fixedDict.h"
 #include "fixedQueue.h"
+#include "scheudler.h"
 
 
 static fixedDict eventmanager_events;
@@ -21,7 +22,9 @@ static fixedQueue eventmanager_queue;
 
 static void eventmanager_dispatch_app(pairEventData* pair)
 {
-
+//	event_func func = fixedDict_get(&eventmanager_events, pair->event);
+//	if(func)
+//		func(pair->data);
 }
 
 static void eventmanager_send_app(char* event, int data)
