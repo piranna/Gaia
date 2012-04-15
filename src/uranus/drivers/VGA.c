@@ -13,6 +13,7 @@
 #define LINES     25		/* The number of lines. */
 #define ATTRIBUTE 7			/* The attribute of an character. */
 #define VIDEO     0xB8000	/* The video memory address. */
+#define TAB_WIDTH 4
 
 /* Variables. */
 static int xpos;	/* Save the X position. */
@@ -50,10 +51,35 @@ static void VGA_text_linefeed(void)
 
 /* Put the character C on the screen and return the written character,
  * just like the libc function printf. */
-int VGA_text_putchar(int c)
+static int VGA_text_putchar(int c)
 {
 	switch(c)
 	{
+		case '\0':
+			return c;
+
+		case '\b':
+			xpos--;
+			if(xpos < 0)
+			{
+				xpos = COLUMNS - 1;
+				ypos--;
+				if(ypos < 0)
+					ypos = 0;
+			}
+
+			*(video + (xpos + ypos * COLUMNS) * 2) = ' ' & 0xFF;
+			*(video + (xpos + ypos * COLUMNS) * 2 + 1) = ATTRIBUTE;
+
+			return c;
+
+		case '\t':
+			xpos += TAB_WIDTH;
+			xpos &=  ~(TAB_WIDTH-1);
+
+			if(xpos < COLUMNS)
+				return c;
+
 		newline:
 
 		case '\n':
@@ -84,5 +110,5 @@ void VGA_init(void)
 {
 	VGA_text_cls();
 
-	eventmanager_attach("putchar", VGA_text_putchar);
+	eventmanager_attach("VGA/text/putchar", VGA_text_putchar);
 }

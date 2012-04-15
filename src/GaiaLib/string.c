@@ -1,12 +1,18 @@
 /*
- * string.c
+ * string.h
  *
- *  Created on: 20/12/2011
+ *  Created on: 21/12/2011
  *      Author: piranna
  */
 
 #include <string.h>
 
+
+// Write len copies of val into dest.
+void memset(unsigned char* dest, unsigned char val, unsigned int len)
+{
+    for(; len; len--) *dest++ = val;
+}
 
 // Compare two strings. Should return -1 if
 // str1 < str2, 0 if they are equal or 1 otherwise.
@@ -48,28 +54,23 @@ int strcmp(const char* str1, const char* str2)
 //	return 0;
 //}
 
-//// Copy len bytes from src to dest.
-//void memcpy(u8int *dest, const u8int *src, u32int len)
-//{
-//    const u8int *sp = (const u8int *)src;
-//    u8int *dp = (u8int *)dest;
-//    for(; len != 0; len--) *dp++ = *sp++;
-//}
+// Copy len bytes from src to dest.
+void memcpy(u8int* dest, const u8int* src, u32int len)
+{
+    for(; len; len--) *dest++ = *src++;
+}
 
 //// Concatenate the NULL-terminated string src onto
 //// the end of dest, and return dest.
-//char *strcat(char *dest, const char *src)
+//char* strcat(char* dest, const char* src)
 //{
-//    while (*dest != 0)
-//    {
-//        *dest = *dest++;
-//    }
+//    while(*dest) dest++;
 //
 //    do
 //    {
 //        *dest++ = *src++;
 //    }
-//    while (*src != 0);
+//    while(*src);
 //    return dest;
 //}
 
@@ -87,8 +88,8 @@ int strcmp(const char* str1, const char* str2)
 // Copy the NULL-terminated string src into dest up to num, and return dest.
 char* strncpy(char* dest, const char* src, size_t num)
 {
+	char* dp = dest;
     for(; num; --num)
-    	*dest++ = *src ? *src++ : '\0';
-
+    	*dp++ = *src ? *src++ : '\0';
     return dest;
 }

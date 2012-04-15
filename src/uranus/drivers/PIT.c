@@ -8,23 +8,30 @@
 // timer.c -- Initialises the PIT, and handles clock updates.
 // Written for JamesM's kernel development tutorials.
 
-#include <stdio.h>
-
+#include "eventmanager.h"
 #include "syscall.h"
 
-/* hardcoded */
-#define IRQ0  32	// PIT
-/* hardcoded */
 
-u32int tick = 0;
-
-
-static void PIT_handler(registers_t* regs)
+static void PIT_handler(void)
 {
+	static u32int tick = 0;
+
 	tick++;
 
+	// Milisecond
+	eventmanager_send("PIT/second/mili", tick);
+
+	// Hundreth of second
+	if(!(tick % 10))
+    	eventmanager_send("PIT/second/hundredth", tick);
+
+	// Tenth of second
 	if(!(tick % 100))
-		printf("Tick: %d\n", tick);
+    	eventmanager_send("PIT/second/tenth", tick);
+
+	// Second
+	if(!(tick % 1000))
+    	eventmanager_send("PIT/second", tick);
 }
 
 void PIT_init(u32int frequency)
@@ -35,7 +42,8 @@ void PIT_init(u32int frequency)
    u32int divisor = 1193180 / frequency;
 
    // Firstly, register our timer callback.
-   irq_register_handler(IRQ0, &PIT_handler);
+//   eventmanager_attach("IRQ/0", &PIT_handler);
+   eventmanager_attach("irq/0", &PIT_handler);
 
    // Send the command byte.
    outb(0x43, 0x36);

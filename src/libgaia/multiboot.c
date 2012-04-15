@@ -34,7 +34,7 @@ void multiboot_print_info(unsigned long magic, unsigned long addr)
 
     /* Are mem_* valid? */
     if(CHECK_FLAG(mbi->flags, MULTIBOOT_INFO_MEMORY))
-    printf("mem_lower = %uKB, mem_upper = %uKB\n",
+        printf("mem_lower = %uKB, mem_upper = %uKB\n",
            (unsigned)mbi->mem_lower, (unsigned)mbi->mem_upper);
 
     /* Is boot_device valid? */
@@ -116,5 +116,32 @@ void multiboot_print_info(unsigned long magic, unsigned long addr)
                    mmap->len >> 32,
                    mmap->len & 0xffffffff,
                    (unsigned)mmap->type);
+    }
+
+//    /* Is there drive info? */
+//    if(CHECK_FLAG(mbi->flags, MULTIBOOT_INFO_DRIVE_INFO))
+//    {
+//    }
+
+//    /* Is there a config table? */
+//    if(CHECK_FLAG(mbi->flags, MULTIBOOT_INFO_CONFIG_TABLE))
+//    {
+//    }
+
+    /* Is there a boot loader name? */
+    if(CHECK_FLAG(mbi->flags, MULTIBOOT_INFO_BOOT_LOADER_NAME))
+        printf("bootloader = %s\n", (char*)mbi->boot_loader_name);
+
+//    /* Is there a APM table? */
+//    if(CHECK_FLAG(mbi->flags, MULTIBOOT_INFO_APM_TABLE))
+//    {
+//    }
+
+    /* Is there video information? */
+    if(CHECK_FLAG(mbi->flags, MULTIBOOT_INFO_VIDEO_INFO))
+    {
+    	printf("vbe_control_info = 0x%x, vbe_mode_info = 0x%x\n",
+    			mbi->vbe_control_info, mbi->vbe_mode_info);
+    	printf("vbe_mode = 0x%x\n", mbi->vbe_mode);
     }
 }

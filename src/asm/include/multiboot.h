@@ -218,6 +218,20 @@
  };
  typedef struct multiboot_mod_list multiboot_module_t;
 
+// typedef struct
+// {
+//   multiboot_uint32_t size;
+//
+//   multiboot_uint8_t drive_number;
+//
+//   multiboot_uint8_t drive_mode;
+//
+//   multiboot_uint16_t drive_cylinders;
+//   multiboot_uint8_t  drive_heads;
+//   multiboot_uint8_t  drive_sectors;
+////   multiboot_uint32_t drive_ports[];
+// } multiboot_drive_t;
+
  void multiboot_print_info(unsigned long magic, unsigned long addr);
 
  #endif /* ! ASM_FILE */

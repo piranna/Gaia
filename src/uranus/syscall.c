@@ -12,11 +12,16 @@ int inb(const u16int port)
 {
 	return in(0, port);
 }
+
+int syscall_inb_p(const u16int port)
+{
+	return syscall_in(3, port);
+}
+
 int outb(const u16int port, const u8int value)
 {
 	return out(0, port,value);
 }
 
-DEFN_SYSCALL2(irq_register_handler, 2, const u8int, const isr_t);
-
-DEFN_SYSCALL1(set_eventmanager_send, 3, const t_em_send)
+DEFN_SYSCALL1(set_eventmanager_send, 2, const t_em_send)
+DEFN_SYSCALL1(set_eventmanager_pumpEvents, 3, const t_em_pumpEvents)

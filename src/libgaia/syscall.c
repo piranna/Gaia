@@ -1,54 +1,21 @@
 // syscall.c -- Defines the implementation of a system call system.
 //              Written for JamesM's kernel development tutorials.
 
-#include "syscall.h"
-
 #include "idt.h"
 #include "irq.h"
 #include "sys/io.h"
 
-
-int in(const u8int bytepower, const u16int port)
-{
-	switch(bytepower)
-	{
-		case 0:	return inb(port);
-		case 1:	return inw(port);
-		case 2:	return inl(port);
-	}
-
-	// We should raise some kind of exception to userspace...
-	return 0;
-}
-
-void out(const u8int bytepower, const u16int port, const u8int value)
-{
-	switch(bytepower)
-	{
-		case 0:	outb(port, value);
-		case 1:	outw(port, value);
-		case 2:	outl(port, value);
-	}
-
-	// We should raise some kind of exception to userspace...
-}
-
-t_em_send uranus_em_send = 0;
-void set_eventmanager_send(t_em_send em_send)
-{
-	uranus_em_send = em_send;
-}
+#include "interruptmanager.h"
 
 
 static void* syscalls[] =
 {
 	&in,
     &out,
-    &irq_handler_register,
     &set_eventmanager_send,
+    &set_eventmanager_pumpEvents,
 };
 u32int num_syscalls = sizeof(syscalls)/sizeof(void*);
-//u32int num_syscalls = 4;
 
 
 static void syscall_handler(registers_t* regs)
@@ -61,9 +28,9 @@ static void syscall_handler(registers_t* regs)
     // Get the required syscall location.
     void* location = syscalls[regs->eax];
 
-    // We don't know how many parameters the function wants, so we just
-    // push them all onto the stack in the correct order. The function will
-    // use all the parameters it wants, and we can pop them all back off afterwards.
+    // We don't know how many parameters the function wants, so we just push
+	// them all onto the stack in the correct order. The function will use all
+	// the parameters it wants, and we can pop them all back off afterwards.
     int ret;
     asm volatile(" \
       push %1; \
@@ -80,8 +47,13 @@ static void syscall_handler(registers_t* regs)
       pop %%ebx; \
       pop %%ebx; \
     " : "=a" (ret)
-      : "r" (regs->edi), "r" (regs->esi), "r" (regs->edx), "r" (regs->ecx), "r" (regs->ebx),
-        "r" (location));
+      : "r" (regs->edi), "r" (regs->esi), "r" (regs->edx), "r" (regs->ecx),
+        "r" (regs->ebx), "r" (location));
+
+    // Ugly hack, force a delay before asign the value - Race condition?
+    int i=0;
+    for(;i<10;i++) printf("");
+
     regs->eax = ret;
 }
 

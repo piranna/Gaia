@@ -1,14 +1,16 @@
 /*
  * string.h
  *
- *  Created on: 20/12/2011
+ *  Created on: 21/12/2011
  *      Author: piranna
  */
 
 #ifndef STRING_H_
 #define STRING_H_
 
-typedef unsigned int size_t;
+#include "types.h"
+
+void memset(unsigned char* dest, unsigned char val, unsigned int len);
 
 // Compare two strings. Should return -1 if
 // str1 < str2, 0 if they are equal or 1 otherwise.
@@ -17,8 +19,8 @@ int strcmp(const char* str1, const char* str2);
 //const void* memchr(const void* ptr, int value, int num);
 //int memcmp(const void* ptr1, const void* ptr2, int num);
 
-//// Copy len bytes from src to dest.
-//void memcpy(u8int *dest, const u8int *src, u32int len);
+// Copy len bytes from src to dest.
+void memcpy(unsigned char* dest, const unsigned char* src, unsigned int len);
 
 //// Concatenate the NULL-terminated string src onto
 //// the end of dest, and return dest.

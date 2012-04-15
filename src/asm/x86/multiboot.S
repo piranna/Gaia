@@ -30,9 +30,9 @@
 
 /* The flags for the Multiboot header. */
 #ifdef __ELF__
-#   define MULTIBOOT_HEADER_FLAGS   0x00000003
+#   define MULTIBOOT_HEADER_FLAGS   0x00000007
 #else
-#   define MULTIBOOT_HEADER_FLAGS   0x00010003
+#   define MULTIBOOT_HEADER_FLAGS   0x00010007
 #endif
 
 
@@ -59,6 +59,11 @@ multiboot_header:
         .long   multiboot_entry     /* entry_addr */
     #endif /* ! __ELF__ */
 
+    .long   1   /* mode_type */
+    .long   0   /* width */
+    .long   0   /* height */
+    .long   0   /* depth */
+
 multiboot_entry:
     /* Initialize the stack pointer. */
     movl    $(stack + STACK_SIZE), %esp
@@ -75,17 +80,17 @@ multiboot_entry:
     /* Now enter the C main function... */
     call    EXT_C(gaia_main)
 
-    /* Halt. */
-    pushl   $halt_message
-    call    EXT_C(printf)
+//    /* Halt. */
+//    pushl   $halt_message
+//    call    EXT_C(printf)
 
 halt:
 //    cli             // Disable interruptions
     hlt             // Halt CPU
     jmp     halt    // Repeat if for whatever reason CPU is still working
 
-halt_message:
-    .asciz  "Halted."
+//halt_message:
+//    .asciz  "Halted."
 
 
 .comm   stack, STACK_SIZE   /* Our stack area. */

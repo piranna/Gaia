@@ -11,7 +11,8 @@
 
 #include "gdt.h"
 #include "idt.h"
-#include "paging.h"
+#include "interruptmanager.h"
+//#include "paging.h"
 #include "syscall.h"
 
 
@@ -48,6 +49,8 @@ void gaia_init(void)
 //    paging_init();
     syscall_init();
 
+    interruptmanager_init();
+
     // Enable interruptions
     asm volatile("sti");
 }
@@ -67,4 +70,8 @@ void gaia_main(unsigned long magic, unsigned long addr)
 
 	// Show multiboot info
 	multiboot_print_info(magic, addr);
+
+	// Run the fake shell to interact with the user in some way...
+	// It's started here to be showed after multiboot info (to be deleted...)
+	fakeshell_run();
 }

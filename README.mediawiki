@@ -1,7 +1,9 @@
 = Gaia =
-Gaia is an exokernel/framework designed based on [http://www.gnu.org/software/grub/manual/multiboot/multiboot.html Multiboot Specification] and with the intention to be very clear and understable.
+Gaia is an exokernel/framework designed based on [http://www.gnu.org/software/grub/manual/multiboot/multiboot.html Multiboot Specification] and with the intention to be very clear and understable. Uranus is an implementation of a pure user-space, event-driven UNIX-like OS microkernel build over Gaia.
 
 The long term purpose is to serve as basis to develop a pure user-space kernel on top of it that could desmitify operating system development.
+
+This code can be found at [https://github.com/piranna/Gaia GitHub]. In the future it will be splited in several subprojects in benefict of [http://code.google.com/r/piranna-p14p/ PyMite4Multiboot], a port of PyMite Python virtual machine to x86 platform. On the other hand, it's a sucessful use case since all the base code is recicled from libGaia core source code, and thanks to it in the future i will be able to make libGaia an independent project common to both and re-start development of Gaia using it as basis.
 
 
 == Dependencies ==
@@ -12,3 +14,38 @@ The long term purpose is to serve as basis to develop a pure user-space kernel o
 
 == Building the Project ==
 From command line, just type ''make'' and later ''make run'' to exec it with QEmu (it's being done using the QEmu --kernel command line argument). Also the makefile is integrated in the Eclipse project, so you could be able to build and launch inside it as usual.
+
+== Tree hierarchy ==
+All Gaia and Uranus source code is inside 'src' folder:
+
+* ''asm'': assembler specific source code, one folder for each platform
+* ''GaiaLib'': C standard lib for Gaia, in the future it could be substitude by NewLib
+* ''libgaia'': Gaia exokernel core source code
+* ''libgaia/lib'': libgaia data structures
+* ''uranus'': source code of the Uranus user-space microkernel
+* ''uranus/drivers'': Uranus event-drivent drivers
+* ''uranus/keyboard_layouts'': keyboard layouts (currently only US)
+* ''uranus/lib'': Uranus data structures
+* ''uranus/eventmanager.c'': Uranus events pumper
+* ''uranus/main.c'': Uranus microkernel main file
+* ''uranus/syscall.c'': syscall interface to Gaia
+
+* ''main.c'': main file of Gaia exokernel
+
+
+== FAQ ==
+=== Where the names of Gaia and Uranus came from? ===
+Gaia and Uranus are elements of a long-run more ambitious project, the ChaOS Project, whose purpose is to develop a dramatically different operating system, and its name came from [http://en.wikipedia.org/wiki/Chaos_(cosmogony) Chaos], the greek mythological deity of primordial disorder and origin of "all".
+
+Being part of the ChaOS Project and the basis of all other code, it made sense that the name the exokernel came from the greek mythologic deity [http://en.wikipedia.org/wiki/Gaia_(mythology) Gaia], the Mother Earth, daughter of Chaos and origin of all the other Ancient Greek gods.
+
+Lastly, continuing with the greek mythologic names it made sense to use another one for the upper, user-space kernel, and being a direct son and working intimately with the Gaia exokernel, the perfect candidate was [http://en.wikipedia.org/wiki/Uranus_(mythology) Uranus], godness of the sky, direct son of Gaia and with whom had all the [http://en.wikipedia.org/wiki/Titan_(mythology) Titans]: Cronos, Oceanus...
+
+Yes, the greek mythology and their genealogic relationships fits very good for naming the hierarchy of the different parts of an operating system... :-D
+
+=== What is the relationship of Gaia and PyMite4Multiboot? ===
+[http://code.google.com/p/python-on-a-chip/ PyMite] is a Python virtual machine focused on 8-bit microcontrollers without OS. Originally i wanted to port it to the platform x86 so it could be able to run on desktop PCs from scratch, but this lead me to found some several bugs that made this inviable, so i recicled all the C code used to boot it and started Gaia (from Gaia point of view, PyMite and Uranus would be equivalent).
+
+Some months later, thanks to an advice on the PyMite bugtracker i found the way to solve the bugs, and after some back-porting of the code, PyMite4Multiboot was working, so the main object of Gaia of develop a framework easy to use to develop operating systems was done, since almost all the code was the same to PyMite4Multiboot and Gaia. This common core code is what in the future will be libGaia.
+
+Regarding to Uranus, my intention is to improve libGaia as an indepent project and develop Uranus and PyMite4Multiboot as parallels projects at the same time. This would allow to me to have different perspective of the problems so could be easy to solve them, but also because this last one was my original project and the logic step to follow since it's easier and faster to develop on/for it (it's just Python!!! :-D )
