@@ -77,4 +77,11 @@ static void eventmanager_init_app(void)
 	eventmanager_queue.capacity = 10;	// Hugly hack
 }
 
+
+// defines 'magic' to have the same func names for apps and OS functions
+#define eventmanager_init       eventmanager_init_app
+#define eventmanager_attach     eventmanager_attach_app
+#define eventmanager_send       eventmanager_send_app
+#define eventmanager_pumpEvents eventmanager_pumpEvents_app
+
 #endif /* EVENTMANAGER_APP_H_ */

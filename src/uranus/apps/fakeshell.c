@@ -48,18 +48,18 @@ static void press_handler(char key)
 
 void fakeshell_init(void)
 {
-	eventmanager_init_app();
+	eventmanager_init();
 
 	// Set events
-	eventmanager_attach_app("term/press/character", press_handler);
+	eventmanager_attach("term/press/character", press_handler);
 
 	// Init buffer
 	buffer[0] = '\0';
 
 	// Register the app on the task manager
 	Process process;
-	process.send = eventmanager_send_app;
-	process.pumpEvents = eventmanager_pumpEvents_app;
+	process.send = eventmanager_send;
+	process.pumpEvents = eventmanager_pumpEvents;
 
 	scheudler_load(&process);
 }
