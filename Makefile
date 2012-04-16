@@ -29,20 +29,28 @@ CFLAGS = $(CWARN) $(CDEBUGS) $(CINCS) \
          -O2 -m32 -nostdinc -fno-builtin -nostdlib
 
 
-.PHONY: all clean run
+.PHONY: all clean run run_tests tests
 
 all : $(TARGET).out
 
 clean :
-	$(MAKE) clean -C $(SOURCE_PATH)/asm
-	$(MAKE) clean -C $(SOURCE_PATH)/GaiaLib
-	$(MAKE) clean -C $(SOURCE_PATH)/libgaia
-	$(MAKE) clean -C $(SOURCE_PATH)/uranus
+	# Libs
+	$(MAKE) $@ -C $(SOURCE_PATH)/asm
+	$(MAKE) $@ -C $(SOURCE_PATH)/GaiaLib
+	$(MAKE) $@ -C $(SOURCE_PATH)/libgaia
+	$(MAKE) $@ -C $(SOURCE_PATH)/uranus
 
+	# Kernel bin file
 	$(RM) $(TARGET).out $(OBJS)
 
 run :
 	qemu --kernel $(TARGET).out
+
+run_tests : tests
+	$(MAKE) $@ -C $(SOURCE_PATH)/libgaia
+
+tests :
+	$(MAKE) $@ -C $(SOURCE_PATH)/libgaia
 
 
 # Rules
